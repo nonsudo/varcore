@@ -1,0 +1,56 @@
+# nonsudo enforce mode — reads allowed, destructive ops blocked
+version: "1.0"
+proxy:
+  upstream_command: "npx"
+  upstream_args: ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+  receipt_file: "./receipts.ndjson"
+  key_id: "auto"
+
+workflow:
+  agent_id: "dev-agent-01"
+  initiator_id: "local"
+  workflow_owner: "local"
+  declared_tools:
+    - "read_file"
+    - "list_directory"
+    - "write_file"
+  session_budget:
+    api_calls: 1000
+
+policy:
+  default: BLOCK
+  rules:
+    - tool: "read_file"
+      decision: ALLOW
+      reason: "read-only — safe"
+      blast_radius: LOW
+      reversible: true
+
+    - tool: "list_directory"
+      decision: ALLOW
+      reason: "read-only — safe"
+      blast_radius: LOW
+      reversible: true
+
+    - tool: "write_file"
+      decision: ALLOW
+      reason: "write allowed — reversible"
+      blast_radius: MED
+      reversible: true
+
+    - tool: "delete_file"
+      decision: BLOCK
+      reason: "destructive — requires human approval"
+      blast_radius: HIGH
+      reversible: false
+
+    - tool: "move_file"
+      decision: BLOCK
+      reason: "destructive — requires human approval"
+      blast_radius: MED
+      reversible: false
+
+explain:
+  base_url: https://api.anthropic.com/v1
+  model: claude-sonnet-4-6
+  api_key_env: NONSUDO_EXPLAIN_KEY

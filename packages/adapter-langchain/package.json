@@ -1,0 +1,86 @@
+{
+  "name": "@varcore/adapter-langchain",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "description": "LangChain tool-call adapter for the NonSudo agent action governance layer",
+  "keywords": [
+    "nonsudo",
+    "langchain",
+    "adapter",
+    "governance",
+    "agent",
+    "ai",
+    "llm"
+  ],
+  "homepage": "https://nonsudo.com",
+  "bugs": {
+    "url": "https://github.com/varcore-standards/varcore/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "dependencies": {
+    "@varcore/core": "file:../core",
+    "@varcore/receipts": "file:../receipts",
+    "canonicalize": "^2.0.0",
+    "ulid": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@langchain/core": ">=0.3.80"
+  },
+  "devDependencies": {
+    "@langchain/core": "^0.3.80",
+    "@noble/ed25519": "^2.2.3",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.4",
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/varcore-standards/varcore",
+    "directory": "packages/adapter-langchain"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@noble/ed25519)/)"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {}
+      ],
+      "^.+\\.js$": [
+        "ts-jest",
+        {
+          "tsconfig": {
+            "allowJs": true
+          }
+        }
+      ]
+    }
+  }
+}

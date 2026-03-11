@@ -1,0 +1,1685 @@
+{
+  "spec_version": "var/1.0",
+  "generated_at": "2026-02-28T00:00:00Z",
+  "key_id": "ns-test-01",
+  "key_jwk": {
+    "kty": "OKP",
+    "crv": "Ed25519",
+    "kid": "ns-test-01",
+    "x": "OzIbdL3LFp9yYMYFkru2PZtNYpQkoMWK_0ZAp18KKwY",
+    "use": "sig"
+  },
+  "vectors": [
+    {
+      "id": "TV-01",
+      "description": "valid 3-receipt chain (manifest then action then closed)",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV01-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV01-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "w13TQo5NOll4PX8Ih92uqrN9q3rczHBsRFakTcj00knpTpHjw3utJoxx1awJZXCXgE7-21PZJQtwaW7B75uhAQ"
+          }
+        },
+        {
+          "receipt_id": "action-TV01-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV01-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:79fed4da50f9c6dc78d4a5528ded209808eec1d8b8ae4a897aad033f9302f01c",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "ZzaU-kEdVRDG7g32BUPAYncSVXH70CjngtDQUTm-KCLuc9v8VOB72tyHZXCjXp_o7CDWXiPyVOJGRUM5Alp0CQ"
+          }
+        },
+        {
+          "receipt_id": "closed-TV01-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV01-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:dec3eab2e502cb559c1092027ba41a391209e5aee0f8de9a8110733905d5c728",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "P9sRwXuYPnOxjRvI4B8LwC9AwvNilDuF_dVtwWBJjbvAVgk9NtUTc7bm-dq_RYwQ0iHeZiGtmBuN5-weFYOEBg"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-02",
+      "description": "valid 3-receipt chain (independent workflow)",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV02-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV02-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "vwpjVZG7jdzthR0JRIoI9y6LOLW3W8CYYyIDoeHQicJV78cBVzzxqiq3pR54M1wuhwZIVAuSfvrzFgdmqgqVBg"
+          }
+        },
+        {
+          "receipt_id": "action-TV02-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV02-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:ceb8e2f1e5a8aaad3fee2edbe529a6f517e6773cf9ce9c6886f93166f8f75623",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "TZbXU4Onk56ONN9LkcF4g4a3kSiOpSC_xNXjq7tt98-9jKXygSmi0sHW2y-Wo48T47UY1ubJO6bTphFbQUfkDw"
+          }
+        },
+        {
+          "receipt_id": "closed-TV02-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV02-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:82d41c7f70047423e39aa0a687a9c0848a137bcdf83cbae65b0a21c6d2aff43b",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "R8Gv0jnemP5kGDjQPSeur06ItBhQhsYUJ8wPdvJP9mHR80c8gksMMVNpmSY35D0nfM121yMmV0u0hMXUObtdDA"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-03",
+      "description": "valid 3-receipt chain (third independent workflow)",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV03-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV03-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "mcarEAcgW44zc_zVS9ILanQPCJ3E0nOnyQt2WyVuf9L_92zd-ocOvkuAIsnZg2NqYMceJB4-oXAN5acQh37nBQ"
+          }
+        },
+        {
+          "receipt_id": "action-TV03-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV03-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:6a2b57ad41bd39a35835b3c7c5f82a5ef27d60978e16a1259d01ff45961d448d",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "SBA7bHjWfIVaRclKarT5SYmLWk9FWzMiCxfzrPBWqinhOP1cZbMhSlB0oAW6LMnbaSQOPVQPg-rFRsaY-NLuDw"
+          }
+        },
+        {
+          "receipt_id": "closed-TV03-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV03-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:3ecfa381ceb9a1dde192c369e84278a874acdbc0ac9229a588d4f045661e55b2",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "rTlEuWefd5_XKftnn2if578RWaPen4LkORA-iICmlhSPw7PLFlSrvrRXTCzg7Z12NBZg5GK0QFlNO82iLOm9Ag"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-04",
+      "description": "valid single-receipt manifest-only chain",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV04-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV04-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "Rn3uIlhgwKiBWABiqGwt4vznUJRUyqCYJ7BteTOLDQEWOugvpQ6BFAbfu-UgfnS7oxPkcFtpJAOtuvL5gospCQ"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-05",
+      "description": "valid 4-receipt chain (manifest then 2 actions)",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV05-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV05-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "QoaMeE4T_Te80o3pbNpKS07A_M4BY_ABB52dEaTzVkBtBeDaeb8XEVFXgXGmFsHsn3L2erwg-GzuXbQnH768Bg"
+          }
+        },
+        {
+          "receipt_id": "action-TV05-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV05-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:1ab64a2ef834c94993c125b6ebb1d229769cee0d1969dbbffec3c98621c5fbe6",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "JCWswVVtkZcq9XnV3LNYcrz91BDOnlZtBc5oZHCXzY9uB5H3qsm2nLOqwYoI00jOEXtkYpJZlFC-91unAmoqCQ"
+          }
+        },
+        {
+          "receipt_id": "action-TV05-wf-2",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV05-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:0b45442630d2f6e5a1901412c47288377e6e3ada1665916ea6ff02b363613ec0",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 1,
+          "state_version_after": 2,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "8U-4irKlzYqSt7I8jLghSKQHgWMWdZ7NIF60_JEe6J3csEK7j1knblmW1VtqhpgXIyfcL_yYESmmPkbuJNSWCg"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-06",
+      "description": "tampered signature on manifest - L1 FAIL",
+      "expected_l1": "FAIL",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV06-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV06-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "cJxZubJeyowzOx8zpTshGQxOCR_M9tzqvKtUxSkgfQ_YFLflFatzmwc1cyiTzQlxzAs31hG5HgABMLZykk0WBQ"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-07",
+      "description": "sequence gap between seq 0 and seq 2 - INCOMPLETE_CHAIN",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV07-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV07-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "FDkmhJOt1d9Jr7O4ub3G9loiN2NKzLNrAaMbPsehB0KRXX7zE4CeXbUzg4PhF3OVN54gserh4Y0TpcB6B3JFCg"
+          }
+        },
+        {
+          "receipt_id": "action-TV07-wf-2",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV07-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:0e1f372fc5355b5755728720a0d18c0f3364ee81f985269b691b9a92e2db86d6",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 1,
+          "state_version_after": 2,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "PshlveopSQo9m6ItiAyzPbASmXN3mHx8ziaP8vOgo8OYpPNSNqKYdZrSsqX-ViuF9KhRP1gmqr4KlUQ9hSYvCg"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-08",
+      "description": "prev_receipt_hash mismatch on action - HASH_MISMATCH",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV08-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV08-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "gyxn62_urqn9qGOvyNSpo04JvGwpxuBq2omgez2mfHIWYEWvLtlEiURBX4e2JW_x50Go_dYO3OX5juf_Urg7Dg"
+          }
+        },
+        {
+          "receipt_id": "action-TV08-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV08-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "Ssn209P9WDnzBOg8KO4vq5jLWBT_c-DEKV_rNlCWpNV_xAfZqGVbzB1VPZI4i5_tSjTPmmpsJuF4SE89jkbvCw"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-09",
+      "description": "manifest with non-null prev_receipt_hash - NULL_HASH_EXPECTED",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV09-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV09-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "pRvwQN8g9cSXmEtTe84eOVzl4lTMbOpApIBecgRAKBjdNEYMTgEojt6kxbhbwdO_kntE3dgHspaWwnzxIbYdAA"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-10",
+      "description": "two consecutive manifests - second manifest has wrong structure",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV10-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV10-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "xXGNgRcEuSZcw_cy_9DtbHIAuUYQP5NBYECgHMWUL8LWZ1ptIaXtY9GLsv27uQfWRZiR2DvliNT3nBJPwgDMAg"
+          }
+        },
+        {
+          "receipt_id": "manifest-TV10-wf-1",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV10-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:1febbf909ce062dbe3655161adb9692121a36e4b585b71f136994fa2cbf9aa72",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "p3h8W7MZ7vrWqM2AMyT46n0Q0LE9tcvrzWUcRJuqueiLl3jcBcOhYUrdPptqUgklBq55YadCRAeupwn5jsdbAA"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-11",
+      "description": "correct sequence numbers but wrong prev_hash - HASH_MISMATCH",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV11-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV11-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "t75TwISKap9bFJMsLvVYK7rnCv85kzZ6132-z2HTM2LuMT0Rc3QWjgR0vP0d-vQBYyD0dQ_RD4oS7ahFM5DoAw"
+          }
+        },
+        {
+          "receipt_id": "action-TV11-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV11-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "Bi4rn1cGnEypMkglo8dk7co2bgtTpmy2jR4xs0gDj1TKrbFTYSJf-t0OCzD9vdnOi-f5QKYLSSN6ivZvi-CoCA"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-12",
+      "description": "duplicate sequence number 0 - INCOMPLETE_CHAIN",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV12-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV12-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "_j5przCUnGma14mDJHFnFabyCN08Z4g74wvs4pxf_RTUIUY6TjD2TD3qZW2Mqt4liSM7HN0gTDPqdlAzZgbkAw"
+          }
+        },
+        {
+          "receipt_id": "action-TV12-wf-0",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV12-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": -1,
+          "state_version_after": 0,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "DOKcDNpIkfeWQxko_2a0Hi0keb49Hdg1nS0V-lPWLOesjG1-F_Z6aX9oEYdoJHl3rBvTDaS2F83Wop-THl5fAw"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-13",
+      "description": "valid chain + allowlisted TSA token - L3 PASS",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "PASS",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV13-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV13-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "eOddDbTziB1LBIxF6FGTajI5tXeTzUOySO1ZK4lClPcmTBUQniOvRiMBAV52uJiFz86J-7xiy6Va-fLSqlztBA"
+          }
+        },
+        {
+          "receipt_id": "action-TV13-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV13-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:2e7e9747323972b259a99e478cb255c947adc4ae7eecd8e3baa091fae71b61d7",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "r8LWSdVnQQOUSX2wjy30bSFsrwtSLtb40KDZj3nKHQa00i4nmlmBesWuAdjEUNp5DQmOcoTJguydgu3k9atBDw"
+          }
+        },
+        {
+          "receipt_id": "closed-TV13-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV13-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:a5c2f21c9ee109002af8363fcd675f6fc71d1513db9520960f5d1acbde4de3bd",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "qpLrxytsvQPs9iuW0Q07fL6rJlepSFrdw5wY-enLgMQ9E0uIYcFedt453SIGLhPN5u0f1uZoKkgekwFTnDnKBA"
+          }
+        }
+      ],
+      "tsa_records": [
+        {
+          "receipt_id": "manifest-TV13-wf-0",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIC5+l0cyOXKyWameR4yyVclHrcSufuzY47qgkfrnG2HXAgQufpdHGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "action-TV13-wf-1",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIKXC8hye4QkAKvg2P81nX2/HHRUT25Uglg9dGsveTeO9AgSlwvIcGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "closed-TV13-wf-2",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIOSVB10mGBeKr17ZgGv9lDjbIbfn27mcX2Tdk0nqKBWMAgTklQddGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "TV-14",
+      "description": "valid chain + non-allowlisted TSA token - L3 FAIL",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "FAIL",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV14-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV14-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "qsSGYVQ4AUSupaK0ugUjmGADU89sq8M9DIp08yzqeh9y9fPly0MdtFBzdfahkaMbgWptbdq2_nX0qRUt7AGfDg"
+          }
+        },
+        {
+          "receipt_id": "action-TV14-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV14-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:f7cb40a7edce056c70c5c9d6fabe1703e7f00576666aafdfe42a1561d39ecdf4",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "5DpiAYWtZ90MrEZkDokIN2lxrH7zDHc5GPTxnOho9oJqqx9e9S8-l0B_5ym9LXxeY-KTyOK3jB8pzoLtamiqCQ"
+          }
+        },
+        {
+          "receipt_id": "closed-TV14-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV14-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:500073f716245167789e188b875a80ccdce4f501855c00c28609791e6f6d8327",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "3-5ahg0NdcJCWH9LvKKog_bZe_CrqAZXEPzlr1C9s9LTwR_F_Dpc8j1cRynkwhLv81F8ewB5I1hialJtM5hZDw"
+          }
+        }
+      ],
+      "tsa_records": [
+        {
+          "receipt_id": "manifest-TV14-wf-0",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIPfLQKftzgVscMXJ1vq+FwPn8AV2Zmqv3+QqFWHTns30AgT3y0CnGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "evilcorp-tsa",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "action-TV14-wf-1",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIFAAc/cWJFFneJ4Yi4dagMzc5PUBhVwAwoYJeR5vbYMnAgRQAHP3GA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "evilcorp-tsa",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "closed-TV14-wf-2",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIOwL+iG8C0jmjctzVAadH0HpPLRh/d2ClHtNJoM5duEKAgTsC/ohGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "evilcorp-tsa",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "TV-15",
+      "description": "chain starts with action_receipt (not workflow_manifest) - MISSING_MANIFEST",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "action-TV15-wf-0",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV15-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": -1,
+          "state_version_after": 0,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "FGY0fHfdHLZ4YGNio9p8YSMigsJ1obAitdfrHlUo-YVYMx2OkWWC5q0Pjj2tzrJMKhDD2hKqWGyfd8dSg-zTAQ"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-16",
+      "description": "DER parsing supply-chain check - verifies @peculiar/asn1-* returns correct messageImprint bytes",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "PASS",
+      "expected_messageimprint_sha256": "668746aaef215bc64ef2d21a7c08e4880e8592f126a3c92463c0c41c111a290b",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV16-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV16-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "rbKFwrEADNDeQgEtO1dNAfvFaLPV4GzQwFqrJZOMHo1gj47SUCGMjPIpmlkdhvCUY-M_vQmVK2nrfiGEpU3JBA"
+          }
+        },
+        {
+          "receipt_id": "action-TV16-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV16-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:668746aaef215bc64ef2d21a7c08e4880e8592f126a3c92463c0c41c111a290b",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "J5WxZfVPXTdd_HXNfAnbe39Giih4CFiEagHcHBaw3odoxIhbxNdhmqooka2boadCHCXJlHlqTkhV2tvM2smjBA"
+          }
+        },
+        {
+          "receipt_id": "closed-TV16-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV16-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:d6c6c9d7195b1ef0eeb39c2628b540fd445f95e96587f520d6f197be67662af4",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "TCtuAHwxIpdqT2fXZmNPbeHO41p2XWkjpuotkkmYHeHVR4vvudGzYIIfXPMn5dtJ7hqVfUS9E6JtOBzn9LtzDw"
+          }
+        }
+      ],
+      "tsa_records": [
+        {
+          "receipt_id": "manifest-TV16-wf-0",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIGaHRqrvIVvGTvLSGnwI5IgOhZLxJqPJJGPAxBwRGikLAgRmh0aqGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "action-TV16-wf-1",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEINbGydcZWx7w7rOcJii1QP1EX5XpZYf1INbxl75nZir0AgTWxsnXGA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "closed-TV16-wf-2",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIJ7bsfwsvXoogv9IXTkSAHnHCas4XQ6OakR+CHNBt+7PAgSe27H8GA8yMDI2MDIyODAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "TV-17",
+      "description": "C1: TSA token uses MD5 OID instead of SHA-256 - L3 FAIL (tsa_hash_algorithm_not_sha256)",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "FAIL",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV17-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV17-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "qv3VR4sJmhky15oaLlvZyKHjhw9HHrf3uZ4mEbYBrOK8t8d_-DOFrdlOWlLlddIHig0Th1gEwfg85_RE-q9NAQ"
+          }
+        },
+        {
+          "receipt_id": "action-TV17-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV17-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:14ea65f231058140dd30916b8bebb0971ae7552b62d317863c94851a080c8947",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "zCCkBetqR5ywm6JU-6BpT3LlpzCGcxNGb8ljQaBUTmgdon1_f5J4woKl2UGXsOAsE0GEQE4ulsSXSEzEsVuqAQ"
+          }
+        },
+        {
+          "receipt_id": "closed-TV17-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV17-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:41dff828aceaa842d7dc3158010c9f2c9926bf1fefded4b4e3b7bc3e687d7d40",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "c8_Ie5KHJnhN473r_sgPhbOBtBCqDrAsAkq5Ym68ZcDRiAv9DJIgwVsO6B-wtVdUknInLoDdC-NTSrDsJje7AA"
+          }
+        }
+      ],
+      "tsa_records": [
+        {
+          "receipt_id": "manifest-TV17-wf-0",
+          "rfc3161_token": "MIGGMAMCAQAwfwYJKoZIhvcNAQcCoHIwcAIBAzEAMGcGCyqGSIb3DQEJEAEEoFgEVjBUAgEBBggrBgEEAetCAzAuMAoGCCqGSIb3DQIFBCAU6mXyMQWBQN0wkWuL67CXGudVK2LTF4Y8lIUaCAyJRwIEFOpl8hgPMjAyNjAyMjgwMDAwMDBaMQA=",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "action-TV17-wf-1",
+          "rfc3161_token": "MIGGMAMCAQAwfwYJKoZIhvcNAQcCoHIwcAIBAzEAMGcGCyqGSIb3DQEJEAEEoFgEVjBUAgEBBggrBgEEAetCAzAuMAoGCCqGSIb3DQIFBCBB3/gorOqoQtfcMVgBDJ8smSa/H+/e1LTjt7w+aH19QAIEQd/4KBgPMjAyNjAyMjgwMDAwMDBaMQA=",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "closed-TV17-wf-2",
+          "rfc3161_token": "MIGGMAMCAQAwfwYJKoZIhvcNAQcCoHIwcAIBAzEAMGcGCyqGSIb3DQEJEAEEoFgEVjBUAgEBBggrBgEEAetCAzAuMAoGCCqGSIb3DQIFBCDLl4mg+jEudjKvdTzD1jeZiJqX9ZMLUqY2dAq5DBfRfgIEy5eJoBgPMjAyNjAyMjgwMDAwMDBaMQA=",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "TV-18",
+      "description": "C2: TSA token genTime is before receipt issued_at - L3 FAIL (tsa_gentime_before_issued_at)",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "FAIL",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV18-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV18-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "KjPvWVmAsWd_eLWHv0WnLpZIpCT92XpQyASZF4siMJ9ubhKDOsBUSKYnO2Ulm4bny50rc8gs-3sHrSMDgBRpCw"
+          }
+        },
+        {
+          "receipt_id": "action-TV18-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV18-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:daef60bbec699196dc1a7ebdbfacadc7b8e53af7bd163a165309248625b67e11",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "QTdmIKE0N6mDjbUrtY2tRHHnwo5UrITatxT_m19sl45UsEKGDDymkaHtwa9eKNMNBKAVvzt2o6JIL9zJ2NJRCw"
+          }
+        },
+        {
+          "receipt_id": "closed-TV18-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV18-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:fede9f5c5646698e226fdbe181aedcb34127ca0debadde6389956ea23e564b01",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "tWPRAJkjkPkXHsalvDxRc9PnhUbyhBbSZH9bvVqa3VXsSzUSpjEW3EJTpTbAa0nzJicXRUjORLA2yewv9nWxBA"
+          }
+        }
+      ],
+      "tsa_records": [
+        {
+          "receipt_id": "manifest-TV18-wf-0",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEINrvYLvsaZGW3Bp+vb+srce45Tr3vRY6FlMJJIYltn4RAgTa72C7GA8yMDIwMDEwMTAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "action-TV18-wf-1",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIP7en1xWRmmOIm/b4YGu3LNBJ8oN663eY4mVbqI+VksBAgT+3p9cGA8yMDIwMDEwMTAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        },
+        {
+          "receipt_id": "closed-TV18-wf-2",
+          "rfc3161_token": "MIGIMAMCAQAwgYAGCSqGSIb3DQEHAqBzMHECAQMxADBoBgsqhkiG9w0BCRABBKBZBFcwVQIBAQYIKwYBBAHrQgMwLzALBglghkgBZQMEAgEEIKTNxxx+9yVfv7XbFxlV8d840pWmPm15FWh4EGaz9gSeAgSkzcccGA8yMDIwMDEwMTAwMDAwMFoxAA==",
+          "tsa_id": "digicert",
+          "timestamped_at": "2026-02-28T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "TV-19",
+      "description": "C3: receipt has spec_version='var/99.0' (unknown) - L2 FAIL (UNKNOWN_SPEC_VERSION)",
+      "expected_l1": "PASS",
+      "expected_l2": "FAIL",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV19-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/99.0",
+          "workflow_id": "TV19-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "1azpfydI2v2bMS_ND-u_vylK71F_VzCgn3mRrWp3lKj2UVrE61UuTOfiCBDwrcD7uUhiLr61PySG38izwydwDg"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-20",
+      "description": "D1: action_receipt with billable_reason=DEGRADED_SESSION - chain valid, DEGRADED_STATE warning emitted",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV20-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV20-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "D0e8A57a09pdx-VGv1omUAc2HAbHd1QKmOZuChkk4Kx6n2lv7DopCRcyobUcoOdsWzcJGpigrNtcPrJfUGHSDA"
+          }
+        },
+        {
+          "receipt_id": "action-TV20-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV20-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:b92da4ac78a7812f2dab8a5fa1c1fdc40c9857272e51319064fdd485a196e317",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "billable": true,
+          "billable_reason": "DEGRADED_SESSION",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "idx1v_KI3NaU49cHjFv1DSmJPGSC9TiigwOtEbWQXi2y7svjo-FLTb2Z5kCxH5V87hVobvlkcRYfJnaPD7FxAw"
+          }
+        },
+        {
+          "receipt_id": "closed-TV20-wf-2",
+          "record_type": "workflow_closed",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV20-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:c5b29e36d8e6ce0dce3491c5ae46ce36c6bb6ba5d245085ba6e587e3b495a739",
+          "sequence_number": 2,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "total_calls": 1,
+          "total_blocked": 0,
+          "total_spend": null,
+          "session_duration_ms": 1000,
+          "close_reason": "explicit_close",
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "hgWnT3dgFiaWdHVrRvHmOapLL2xWaSKktad72pFnP-gx4Z2xkIemYteJydywtuD70pZA2KZdlsiz517oi7xoBw"
+          }
+        }
+      ],
+      "tsa_records": []
+    },
+    {
+      "id": "TV-21",
+      "description": "D2: post_receipt linked to action_receipt without money_action=true - chain valid, MONEY_ACTION_TAG_MISSING warning emitted",
+      "expected_l1": "PASS",
+      "expected_l2": "PASS",
+      "expected_l3": "SKIPPED",
+      "receipts": [
+        {
+          "receipt_id": "manifest-TV21-wf-0",
+          "record_type": "workflow_manifest",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV21-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": null,
+          "sequence_number": 0,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "initiator_id": "test-init",
+          "workflow_owner": "test-team",
+          "session_budget": {
+            "api_calls": 100
+          },
+          "declared_tools": [],
+          "capability_manifest_hash": null,
+          "parent_workflow_id": null,
+          "framework_ref": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "kBAKeZzNsya0SP-BpU_NJohRs7Zlbc6Z8lTfG-1lPHw11gfK0BlxEnA7BGQ7RnAGRxKRjXPtnp0pATXX8kDnBQ"
+          }
+        },
+        {
+          "receipt_id": "action-TV21-wf-1",
+          "record_type": "action_receipt",
+          "spec_version": "var/1.0",
+          "workflow_id": "TV21-wf",
+          "workflow_id_source": "nonsudo_generated",
+          "agent_id": "test-agent",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "prev_receipt_hash": "sha256:f642ff36cae0210d78e60de71f243c6383f0ce22c85486fd3ce5b41c4a955c98",
+          "sequence_number": 1,
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "tool_name": "list_directory",
+          "params_canonical_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "decision": "ALLOW",
+          "decision_reason": "conformance test",
+          "decision_order": 1,
+          "queue_status": "COMPLETED",
+          "queue_timeout_ms": 5000,
+          "blast_radius": "LOW",
+          "reversible": true,
+          "state_version_before": 0,
+          "state_version_after": 1,
+          "response_hash": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "mmuGj_0STfJA4ZxKWG0knZMjPTkDcRggNWgWjnnw1vfnxD6dB3s_7sRAAC1ztfFSNZ-Vip4vPTLtuBkaIszJDw"
+          }
+        },
+        {
+          "post_receipt_id": "post-TV21-wf-2",
+          "record_type": "post_receipt",
+          "spec_version": "var/1.0",
+          "pre_receipt_id": "action-TV21-wf-1",
+          "workflow_id": "TV21-wf",
+          "agent_id": "test-agent",
+          "sequence_number": 2,
+          "prev_receipt_hash": "sha256:f1acc7bb58c7790e11f0a54ad530999144650df35170d05a76ee761f30188d41",
+          "policy_bundle_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "tool_name": "list_directory",
+          "terminal_outcome": "SUCCESS",
+          "upstream_response_digest": null,
+          "projection_id": null,
+          "projection_hash": null,
+          "idempotency_key": null,
+          "tool_call_correlation_id": null,
+          "execution_start_ms": 0,
+          "execution_end_ms": 1,
+          "degraded_reason": null,
+          "billable": false,
+          "billable_reason": "READ_ONLY",
+          "issued_at": "2026-02-28T00:00:00Z",
+          "account_context": null,
+          "rfc3161_token": null,
+          "tsa_id": null,
+          "signature": {
+            "alg": "Ed25519",
+            "key_id": "ns-test-01",
+            "sig": "7DGBoA7Zq2obaZP_-3pSpi1i9267-rqcqZ_FJrVaivwhZzr2SMcTfVaqDuW_V50Ds2Yh7ODOaQ8XmNqHfn5_Aw"
+          }
+        }
+      ],
+      "tsa_records": []
+    }
+  ]
+}

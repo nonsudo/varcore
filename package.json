@@ -1,0 +1,25 @@
+{
+  "name": "varcore",
+  "private": true,
+  "workspaces": [
+    "packages/core",
+    "packages/receipts",
+    "packages/policy",
+    "packages/store",
+    "packages/adapter-openai",
+    "packages/adapter-langchain"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.2"
+  }
+}

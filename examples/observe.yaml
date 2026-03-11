@@ -1,0 +1,19 @@
+# nonsudo observe mode — all tools allowed, full signed audit trail, no blocking
+version: "1.0"
+proxy:
+  upstream_command: "npx"
+  upstream_args: ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+  receipt_file: "./receipts.ndjson"
+  key_id: "auto"
+
+workflow:
+  agent_id: "dev-agent-01"
+  initiator_id: "local"
+  workflow_owner: "local"
+  declared_tools: []
+  session_budget:
+    api_calls: 1000
+
+policy:
+  default: ALLOW
+  rules: []

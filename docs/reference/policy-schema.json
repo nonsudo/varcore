@@ -1,0 +1,452 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.nonsudo.dev/var/v1.0/policy-schema.json",
+  "title": "NonSudo Policy Bundle",
+  "description": "JSON Schema for nonsudo.yaml policy bundles. Every field introduced across all NonSudo sessions is represented here. Policy YAML is parsed and validated against this schema at proxy startup.",
+  "type": "object",
+  "required": ["var_core_version", "key_id", "rules"],
+  "additionalProperties": false,
+  "properties": {
+    "var_core_version": {
+      "type": "string",
+      "description": "VAR Core spec version this bundle conforms to. Must be '0.1' for v1.0 deployments.",
+      "enum": ["0.1"]
+    },
+    "var_money_version": {
+      "type": "string",
+      "description": "VAR-Money extension version. Required if any rules have money_action: true. Omit entirely for non-money deployments.",
+      "enum": ["1.0"]
+    },
+    "key_id": {
+      "type": "string",
+      "description": "Ed25519 signing key identifier. Must match the key_id of the key pair in ~/.nonsudo/keys/. Use 'auto' to select the most recent key automatically.",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$|^auto$"
+    },
+    "mode": {
+      "type": "string",
+      "description": "Deployment mode. Defaults to 'crawl' if absent. 'run' is reserved for v1.1.",
+      "enum": ["crawl", "walk"],
+      "default": "crawl"
+    },
+    "enforcement": {
+      "type": "boolean",
+      "description": "If false, the proxy records receipts but does not block any tool calls (observe mode). Equivalent to mode: crawl with no blocking rules.",
+      "default": false
+    },
+    "rules": {
+      "type": "array",
+      "description": "Ordered list of policy rules. Rules are evaluated in declaration order; the first matching rule wins. If no rule matches, the default decision applies.",
+      "items": {
+        "$ref": "#/definitions/PolicyRule"
+      }
+    },
+    "policy": {
+      "type": "object",
+      "description": "Top-level policy envelope. Either declare rules directly or nest them under policy.rules.",
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "type": "string",
+          "description": "Default decision when no rule matches.",
+          "enum": ["ALLOW", "BLOCK", "STEP_UP", "FAIL_OPEN"],
+          "default": "ALLOW"
+        },
+        "rules": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PolicyRule" }
+        }
+      }
+    },
+    "velocity": {
+      "type": "object",
+      "description": "Global velocity circuit breaker configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "limits": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/VelocityLimit" }
+        }
+      }
+    },
+    "proxy": {
+      "type": "object",
+      "description": "Proxy process configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "key_id": {
+          "type": "string",
+          "description": "Override the signing key used by the proxy. Use 'auto' to select most-recent.",
+          "pattern": "^[a-zA-Z0-9_-]{1,64}$|^auto$"
+        },
+        "queue_timeout_ms": {
+          "type": "integer",
+          "description": "Default policy evaluation timeout in milliseconds. A tool call that exceeds this produces a DEAD_LETTER receipt.",
+          "minimum": 1,
+          "maximum": 120000,
+          "default": 5000
+        },
+        "session_ttl_seconds": {
+          "type": "integer",
+          "description": "Idle session timeout. Sessions inactive for longer than this are evicted with close_reason: ttl_expired.",
+          "minimum": 60,
+          "default": 86400
+        },
+        "session_rate_limit": {
+          "type": "integer",
+          "description": "Maximum concurrent sessions. Requests beyond this limit receive HTTP 429.",
+          "minimum": 1
+        }
+      }
+    },
+    "tsa": {
+      "type": "object",
+      "description": "RFC 3161 Time-Stamp Authority configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable asynchronous RFC 3161 timestamping.",
+          "default": false
+        },
+        "provider": {
+          "type": "string",
+          "description": "Named TSA provider (e.g. 'digicert', 'sectigo'). Used to set tsa_id in sidecar records.",
+          "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+        },
+        "url": {
+          "type": "string",
+          "description": "TSA endpoint URL. Required if enabled: true and provider does not resolve to a built-in URL.",
+          "format": "uri"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "description": "TSA request timeout in milliseconds.",
+          "minimum": 100,
+          "maximum": 30000,
+          "default": 5000
+        },
+        "retry_attempts": {
+          "type": "integer",
+          "description": "Number of retry attempts before marking the TSA worker degraded.",
+          "minimum": 0,
+          "maximum": 10,
+          "default": 3
+        },
+        "accepting_tsa_ids": {
+          "type": "array",
+          "description": "Allowlist of tsa_id values accepted during L3 verification. If empty, all TSA IDs are accepted.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "receipt_file": {
+      "type": "string",
+      "description": "Path to the NDJSON receipt file (stdio mode). Relative paths are resolved from cwd.",
+      "default": "./receipts.ndjson"
+    },
+    "state_backend": {
+      "type": "string",
+      "description": "State backend for workflow state. 'memory' uses in-process state (default). 'redis' uses the Redis URL from NONSUDO_REDIS_URL.",
+      "enum": ["memory", "redis"],
+      "default": "memory"
+    },
+    "explain": {
+      "type": "object",
+      "description": "LLM explanation configuration for `nonsudo explain`.",
+      "additionalProperties": false,
+      "properties": {
+        "base_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "model": {
+          "type": "string"
+        },
+        "api_key_env": {
+          "type": "string",
+          "description": "Environment variable name containing the LLM API key."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PolicyRule": {
+      "type": "object",
+      "title": "PolicyRule",
+      "description": "A single policy evaluation rule. Rules are matched by tool name or glob pattern.",
+      "required": ["id", "tool", "decision"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique rule identifier. Used in decision_reason and audit output.",
+          "pattern": "^[a-zA-Z0-9_-]{1,128}$"
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool name or glob pattern (using * as wildcard). Matching is case-sensitive. Use '*' to match all tools."
+        },
+        "decision": {
+          "type": "string",
+          "description": "Decision to apply when this rule matches.",
+          "enum": ["ALLOW", "BLOCK", "STEP_UP", "FAIL_OPEN"]
+        },
+        "reason": {
+          "type": "string",
+          "description": "Human-readable explanation of the decision. Recorded in action_receipt.decision_reason."
+        },
+        "blast_radius": {
+          "type": "string",
+          "description": "Estimated blast radius of the tool action. Informational; recorded in the receipt.",
+          "enum": ["LOW", "MED", "HIGH", "CRITICAL"]
+        },
+        "reversible": {
+          "type": "boolean",
+          "description": "Whether the tool action can be undone. Recorded in the receipt."
+        },
+        "money_action": {
+          "type": "boolean",
+          "description": "Declare this rule as governing a money action. Required for VAR-Money v1.0 enforcement.",
+          "default": false
+        },
+        "unsafe_override": {
+          "type": "boolean",
+          "description": "Explicitly suppress taxonomy-based money_action classification. Use only when the tool name matches a taxonomy pattern but is not a money action. This field name is intentionally alarming.",
+          "default": false
+        },
+        "amount_field": {
+          "type": "string",
+          "description": "Parameter field containing the action amount in minor units. Required when money_action: true."
+        },
+        "currency_field": {
+          "type": "string",
+          "description": "Parameter field containing the ISO 4217 currency code. Required when money_action: true."
+        },
+        "idempotency_key_field": {
+          "type": "string",
+          "description": "Parameter field containing the idempotency key. When declared, enables idempotency deduplication."
+        },
+        "account_context_field": {
+          "type": "string",
+          "description": "Parameter field containing the account context (e.g. Stripe account ID). Part of the idempotency dedupe tuple."
+        },
+        "projection_id": {
+          "type": "string",
+          "description": "Projection definition ID for outcome binding. Required for money actions in Walk/Run mode. References a built-in or operator-defined projection.",
+          "pattern": "^[a-zA-Z0-9_-]{1,128}$"
+        },
+        "max_spend": {
+          "type": "integer",
+          "description": "Maximum cumulative spend in minor units for this rule within spend_window. Required when money_action: true.",
+          "minimum": 0
+        },
+        "spend_window": {
+          "type": "string",
+          "description": "Accounting window for max_spend. 'session' resets on workflow close, 'daily' resets at UTC midnight, 'monthly' resets on the first of each month.",
+          "enum": ["session", "daily", "monthly"],
+          "default": "session"
+        },
+        "reservation_ttl_hours": {
+          "type": "integer",
+          "description": "Hours before a TIMEOUT-held budget reservation is released and a RESERVATION_EXPIRED receipt is emitted.",
+          "minimum": 1,
+          "maximum": 720,
+          "default": 24
+        },
+        "monthly_cap": {
+          "type": "integer",
+          "description": "Optional separate monthly ceiling in minor units, enforced independently of max_spend and spend_window.",
+          "minimum": 0
+        },
+        "params": {
+          "type": "array",
+          "description": "Parameter-level conditions. All conditions must pass (AND logic) for the rule to match.",
+          "items": { "$ref": "#/definitions/ParamsCondition" }
+        },
+        "vcb": {
+          "$ref": "#/definitions/VelocityLimit",
+          "description": "Per-rule velocity circuit breaker. Takes precedence over global velocity limits for this tool."
+        },
+        "queue_timeout_ms": {
+          "type": "integer",
+          "description": "Per-rule policy evaluation timeout override. Overrides proxy.queue_timeout_ms for this specific tool.",
+          "minimum": 1,
+          "maximum": 120000
+        }
+      }
+    },
+    "ParamsCondition": {
+      "type": "object",
+      "title": "ParamsCondition",
+      "description": "A condition on a tool call parameter value. Uses dot notation for nested fields up to depth 5.",
+      "required": ["field", "op"],
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Dot-notation path to the parameter field (e.g. 'amount', 'metadata.account_id')."
+        },
+        "op": {
+          "type": "string",
+          "description": "Comparison operator.",
+          "enum": ["eq", "neq", "gt", "gte", "lt", "lte", "match", "not_match", "in", "not_in", "exists", "not_exists"]
+        },
+        "value": {
+          "description": "Comparison value. Type depends on op: string for eq/neq/match/not_match/in/not_in, number for gt/gte/lt/lte. Absent for exists/not_exists."
+        }
+      }
+    },
+    "VelocityLimit": {
+      "type": "object",
+      "title": "VelocityLimit",
+      "description": "Velocity circuit breaker limit for a tool or pattern.",
+      "required": ["tool", "max_calls", "window"],
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "type": "string",
+          "description": "Tool name or glob pattern. Use '*' for a global rate limit across all tools."
+        },
+        "max_calls": {
+          "type": "integer",
+          "description": "Maximum number of calls permitted within the window.",
+          "minimum": 1
+        },
+        "window": {
+          "type": "string",
+          "description": "Time window string. Supported formats: '<N>m' (minutes), '<N>h' (hours), 'session' (entire session), 'workflow' (per workflow_id).",
+          "pattern": "^([0-9]+[mh]|session|workflow)$"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "_comment": "Example 1: Minimal — ALLOW + BLOCK rules, no money actions.",
+      "var_core_version": "0.1",
+      "key_id": "auto",
+      "mode": "walk",
+      "enforcement": true,
+      "rules": [
+        {
+          "id": "block-delete-file",
+          "tool": "delete_file",
+          "decision": "BLOCK",
+          "reason": "Destructive operation requires human approval",
+          "blast_radius": "HIGH",
+          "reversible": false
+        },
+        {
+          "id": "block-force-push",
+          "tool": "git_push",
+          "decision": "BLOCK",
+          "reason": "Force push to main is prohibited",
+          "blast_radius": "HIGH",
+          "reversible": false,
+          "params": [
+            { "field": "force", "op": "eq", "value": true }
+          ]
+        },
+        {
+          "id": "allow-all",
+          "tool": "*",
+          "decision": "ALLOW",
+          "reason": "Default allow for undeclared tools",
+          "blast_radius": "LOW",
+          "reversible": true
+        }
+      ],
+      "policy": {
+        "default": "ALLOW"
+      },
+      "tsa": {
+        "enabled": false
+      }
+    },
+    {
+      "_comment": "Example 2: Full — money action with Stripe refund projection, budget cap, VCB limit, STEP_UP rule.",
+      "var_core_version": "0.1",
+      "var_money_version": "1.0",
+      "key_id": "auto",
+      "mode": "walk",
+      "enforcement": true,
+      "rules": [
+        {
+          "id": "stripe-refund-small",
+          "tool": "stripe_create_refund",
+          "decision": "ALLOW",
+          "reason": "Refunds under $500 are auto-approved",
+          "blast_radius": "MED",
+          "reversible": false,
+          "money_action": true,
+          "amount_field": "amount",
+          "currency_field": "currency",
+          "idempotency_key_field": "idempotency_key",
+          "account_context_field": "stripe_account",
+          "projection_id": "stripe-refund-v1",
+          "max_spend": 50000,
+          "spend_window": "daily",
+          "reservation_ttl_hours": 24,
+          "params": [
+            { "field": "amount", "op": "lt", "value": 50000 }
+          ],
+          "vcb": {
+            "tool": "stripe_create_refund",
+            "max_calls": 10,
+            "window": "1h"
+          }
+        },
+        {
+          "id": "stripe-refund-large",
+          "tool": "stripe_create_refund",
+          "decision": "STEP_UP",
+          "reason": "Refunds of $500 or more require human approval",
+          "blast_radius": "HIGH",
+          "reversible": false,
+          "money_action": true,
+          "amount_field": "amount",
+          "currency_field": "currency",
+          "idempotency_key_field": "idempotency_key",
+          "account_context_field": "stripe_account",
+          "projection_id": "stripe-refund-v1",
+          "max_spend": 500000,
+          "spend_window": "daily",
+          "monthly_cap": 5000000,
+          "params": [
+            { "field": "amount", "op": "gte", "value": 50000 }
+          ],
+          "queue_timeout_ms": 30000
+        },
+        {
+          "id": "block-all-other-stripe",
+          "tool": "stripe_*",
+          "decision": "BLOCK",
+          "reason": "Only stripe_create_refund is declared in this policy"
+        }
+      ],
+      "policy": {
+        "default": "BLOCK"
+      },
+      "velocity": {
+        "limits": [
+          {
+            "tool": "stripe_create_refund",
+            "max_calls": 50,
+            "window": "1h"
+          }
+        ]
+      },
+      "tsa": {
+        "enabled": true,
+        "provider": "digicert",
+        "timeout_ms": 5000,
+        "retry_attempts": 3,
+        "accepting_tsa_ids": ["digicert"]
+      },
+      "proxy": {
+        "queue_timeout_ms": 5000,
+        "session_ttl_seconds": 3600
+      }
+    }
+  ]
+}

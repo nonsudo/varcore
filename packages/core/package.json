@@ -1,0 +1,47 @@
+{
+  "name": "@varcore/core",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "description": "Protocol-agnostic types for the NonSudo agent action governance layer",
+  "keywords": [
+    "nonsudo",
+    "governance",
+    "agent",
+    "ai",
+    "safety",
+    "policy",
+    "types"
+  ],
+  "homepage": "https://nonsudo.com",
+  "bugs": {
+    "url": "https://github.com/varcore-standards/varcore/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo 'No tests in core \u2014 types only'",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/varcore-standards/varcore",
+    "directory": "packages/core"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

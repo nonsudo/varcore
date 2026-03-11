@@ -1,0 +1,85 @@
+# golden-vector-policy.yaml
+#
+# Canonical policy used as the reference design for the 18 golden vector tests.
+# Each test in packages/proxy/src/__tests__/golden-vectors.test.ts creates a
+# per-test YAML config that derives from or overrides sections of this policy.
+#
+# Per-vector overrides (summary):
+#   GV-01  manifest_normal            default ALLOW, rules: []
+#   GV-02  manifest_tools_list_fail   default ALLOW, --fail-tools-list
+#   GV-03  allow_call                 default ALLOW, rules: []
+#   GV-04  block_policy               default ALLOW, echo → BLOCK
+#   GV-05  block_undeclared           default ALLOW, declared_tools override
+#   GV-06  block_declared_unavail     default ALLOW, --fail-tools-list
+#   GV-07  block_params_rule          default ALLOW, transfer_funds BLOCK amount > 9999
+#   GV-08  block_params_type_error    default BLOCK, transfer_funds ALLOW amount > 0
+#   GV-09  block_params_too_large     default ALLOW, echo with 2MiB payload
+#   GV-10  step_up                    default ALLOW, transfer_funds -> STEP_UP
+#   GV-11  fail_open                  default ALLOW, any_tool -> FAIL_OPEN
+#   GV-12  dead_letter_vcb            default ALLOW, velocity: echo max 1/workflow
+#   GV-13  dead_letter_timeout        default ALLOW, queue_timeout_ms: 500
+#   GV-14  workflow_closed_graceful   default ALLOW, rules: []
+#   GV-15  workflow_closed_ttl        programmatic (loadOrGenerateKeypair)
+#   GV-16  complete_chain             default ALLOW, rules: []
+#   GV-17  tsa_sidecar                default ALLOW + synthetic RFC 3161 sidecar
+#   GV-18  response_hash_null         default ALLOW, rules: []
+
+version: "1.0"
+proxy:
+  upstream_command: node
+  upstream_args: []   # overridden per test; real tests set path to test-mcp-server.mjs
+  receipt_file: "receipts.ndjson"   # overridden per test via temp config
+  key_id: "auto"
+  queue_timeout_ms: 5000   # GV-13 overrides to 500ms
+
+workflow:
+  agent_id: "gv-test-agent"
+  initiator_id: "gv-tester"
+  workflow_owner: "gv-team"
+  session_budget:
+    api_calls: 100
+
+policy:
+  default: FAIL_OPEN
+  rules:
+    - tool: echo
+      decision: ALLOW
+      reason: "echo is always allowed"
+      blast_radius: LOW
+      reversible: true
+
+    - tool: noop
+      decision: BLOCK
+      reason: "noop is always blocked"
+      blast_radius: LOW
+      reversible: true
+
+    # transfer_funds BLOCK when amount > 1000
+    - tool: transfer_funds
+      decision: BLOCK
+      reason: "amount exceeds limit"
+      blast_radius: CRITICAL
+      reversible: false
+      params:
+        conditions:
+          - field: amount
+            op: gt
+            value: 1000
+
+    # transfer_funds STEP_UP when amount > 500 (catches 500 < amount <= 1000)
+    - tool: transfer_funds
+      decision: STEP_UP
+      reason: "requires approval"
+      blast_radius: HIGH
+      reversible: false
+      params:
+        conditions:
+          - field: amount
+            op: gt
+            value: 500
+
+velocity:
+  limits:
+    - tool: echo
+      max_calls: 3
+      window: workflow

@@ -1,0 +1,40 @@
+[project]
+name = "nonsudo-verify"
+version = "1.0.0"
+description = "VAR-Core receipt chain verifier — reference implementation 2"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "cryptography>=42.0.0",
+  "jcs>=0.2.0",
+  "pyasn1>=0.5.0",
+  "pyasn1-modules>=0.3.0",
+  "click>=8.1.0",
+  "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0",
+  "mypy>=1.0.0",
+]
+
+[project.scripts]
+nonsudo-verify = "nonsudo_verify.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: marks tests as integration (deselect with '-m \"not integration\"')",
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

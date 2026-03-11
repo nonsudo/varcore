@@ -1,0 +1,63 @@
+{
+  "name": "@varcore/store",
+  "version": "1.0.0",
+  "description": "NonSudo receipt store \u2014 queryable SQLite index of VAR v1 receipt chains",
+  "license": "Apache-2.0",
+  "keywords": [
+    "nonsudo",
+    "store",
+    "sqlite",
+    "receipts",
+    "audit",
+    "governance",
+    "agent",
+    "ai"
+  ],
+  "homepage": "https://nonsudo.com",
+  "bugs": {
+    "url": "https://github.com/varcore-standards/varcore/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/varcore-standards/varcore",
+    "directory": "packages/store"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.5",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ]
+  }
+}

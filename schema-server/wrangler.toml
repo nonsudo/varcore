@@ -1,0 +1,13 @@
+name = "nonsudo-schema-server"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Public (non-secret) vars go here. Keys are stored as secrets via:
+#   wrangler secret put KEY_NS_PROD_01
+#   wrangler secret put TEST_VECTORS_V1
+
+[[routes]]
+pattern = "schemas.nonsudo.com/*"
+zone_name = "nonsudo.com"
