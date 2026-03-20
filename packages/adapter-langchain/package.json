@@ -1,6 +1,6 @@
 {
   "name": "@varcore/adapter-langchain",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "license": "Apache-2.0",
   "description": "LangChain tool-call adapter for the NonSudo agent action governance layer",
   "keywords": [
@@ -40,7 +40,7 @@
     "@langchain/core": ">=0.3.80"
   },
   "devDependencies": {
-    "@langchain/core": "^0.3.80",
+    "@langchain/core": "^1.1.32",
     "@noble/ed25519": "^2.2.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.0.0",

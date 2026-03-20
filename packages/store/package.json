@@ -1,7 +1,7 @@
 {
   "name": "@varcore/store",
-  "version": "1.0.0",
-  "description": "NonSudo receipt store \u2014 queryable SQLite index of VAR v1 receipt chains",
+  "version": "1.2.0",
+  "description": "NonSudo receipt store — queryable SQLite index of VAR v1 receipt chains",
   "license": "Apache-2.0",
   "keywords": [
     "nonsudo",

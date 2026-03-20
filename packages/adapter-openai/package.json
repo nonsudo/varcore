@@ -1,6 +1,6 @@
 {
   "name": "@varcore/adapter-openai",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "license": "Apache-2.0",
   "description": "OpenAI function-calling adapter for the NonSudo agent action governance layer",
   "keywords": [
