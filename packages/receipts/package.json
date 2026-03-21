@@ -15,7 +15,7 @@
   ],
   "homepage": "https://nonsudo.com",
   "bugs": {
-    "url": "https://github.com/varcore-standards/varcore/issues"
+    "url": "https://github.com/nonsudo/varcore/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/varcore-standards/varcore.git",
+    "url": "git+https://github.com/nonsudo/varcore.git",
     "directory": "packages/receipts"
   },
   "publishConfig": {

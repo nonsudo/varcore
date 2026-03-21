@@ -379,7 +379,7 @@ VAR-Core is [nonsudo](https://nonsudo.com).
 ## Contributing
 
 ```bash
-git clone https://github.com/varcore-standards/varcore
+git clone https://github.com/nonsudo/varcore
 cd varcore
 npm install
 npm test
