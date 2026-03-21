@@ -1,6 +1,6 @@
 {
   "name": "@varcore/adapter-langchain",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "Apache-2.0",
   "description": "LangChain tool-call adapter for the NonSudo agent action governance layer",
   "keywords": [

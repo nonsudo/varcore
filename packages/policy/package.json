@@ -1,6 +1,6 @@
 {
   "name": "@varcore/policy",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "VAR-Core deterministic YAML policy engine with pre-built compliance control packs",
   "license": "Apache-2.0",
   "keywords": [
