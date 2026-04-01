@@ -77,6 +77,63 @@ export interface PolicyRule {
   projection_id?: string;
 }
 
+export interface NetworkPolicy {
+  /**
+   * If non-empty, agent may only contact these hostnames (exact match).
+   * Note: allowlist is exact-match only — "stripe.com" does NOT cover "api.stripe.com".
+   * Subdomain coverage requires explicit entries.
+   */
+  allowed_domains?: string[];
+  /**
+   * Hostnames always blocked. Matching is exact OR subdomain suffix:
+   * "ngrok.io" blocks "ngrok.io" and "abc.ngrok.io" but not "notngrok.io".
+   * Note: blocked_domains uses suffix matching; allowed_domains uses exact matching.
+   * This asymmetry is intentional — blocklist is conservative, allowlist is strict.
+   */
+  blocked_domains?: string[];
+  /** If true, any URL argument using http:// (not https://) is blocked. */
+  require_tls?: boolean;
+}
+
+export interface FilesystemPolicy {
+  /**
+   * If non-empty, file path arguments must start with one of these prefixes.
+   * Exact prefix match only — no glob.
+   */
+  allowed_paths?: string[];
+  /** File path arguments matching any of these prefixes are blocked. */
+  blocked_paths?: string[];
+  /** File path arguments with any of these extensions are blocked, e.g. [".pem", ".env"]. */
+  blocked_extensions?: string[];
+}
+
+export interface ModelsPolicy {
+  /**
+   * If non-empty, only these model IDs are permitted. Exact match only — no glob.
+   * e.g. ["claude-sonnet-4-6", "claude-opus-4-6"]
+   */
+  allowed?: string[];
+  /**
+   * These model IDs are always blocked. Exact match only — no glob.
+   */
+  blocked?: string[];
+}
+
+export interface ToolAnnotation {
+  /** Compliance tier — affects default step-up behavior. */
+  compliance_tier?: "public" | "internal" | "restricted" | "system";
+  /**
+   * If true, always escalate to STEP_UP regardless of normal rule matching.
+   * Short-circuits before Pass 1 (exact rule match) in evaluatePolicy.
+   */
+  always_step_up?: boolean;
+}
+
+export interface EvaluationContext {
+  /** Model ID for the current session, e.g. "claude-sonnet-4-6". */
+  model_id?: string;
+}
+
 export interface PolicyConfig {
   default: "ALLOW" | "BLOCK";
   rules: PolicyRule[];
@@ -86,6 +143,14 @@ export interface PolicyConfig {
    * Unknown IDs throw PolicyLoadError at startup.
    */
   schemas?: string[];
+  /** Network egress controls — evaluated before rule matching. */
+  network?: NetworkPolicy;
+  /** Filesystem access controls — evaluated before rule matching. */
+  filesystem?: FilesystemPolicy;
+  /** Model allowlist/blocklist — evaluated before rule matching. */
+  models?: ModelsPolicy;
+  /** Per-tool annotations keyed by exact tool name. */
+  tool_annotations?: Record<string, ToolAnnotation>;
 }
 
 export interface EvaluationResult {

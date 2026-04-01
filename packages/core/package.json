@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "echo 'No tests in core — types only'",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/agent-class-id.test.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --max-warnings 0"
   },

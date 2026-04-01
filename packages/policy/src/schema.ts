@@ -35,6 +35,49 @@ const paramsBlockSchema = {
   },
 };
 
+const networkSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    allowed_domains: { type: "array", items: { type: "string" } },
+    blocked_domains: { type: "array", items: { type: "string" } },
+    require_tls: { type: "boolean" },
+  },
+};
+
+const filesystemSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    allowed_paths: { type: "array", items: { type: "string" } },
+    blocked_paths: { type: "array", items: { type: "string" } },
+    blocked_extensions: { type: "array", items: { type: "string" } },
+  },
+};
+
+const modelsSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    allowed: { type: "array", items: { type: "string" } },
+    blocked: { type: "array", items: { type: "string" } },
+  },
+};
+
+const toolAnnotationSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    compliance_tier: { type: "string", enum: ["public", "internal", "restricted", "system"] },
+    always_step_up: { type: "boolean" },
+  },
+};
+
+const toolAnnotationsSchema = {
+  type: "object",
+  additionalProperties: toolAnnotationSchema,
+};
+
 // Plain JSON schema — avoids AJV's JSONSchemaType enum typing constraints
 const policySchema = {
   type: "object",
@@ -81,6 +124,10 @@ const policySchema = {
       type: "array",
       items: { type: "string", minLength: 1 },
     },
+    network: networkSchema,
+    filesystem: filesystemSchema,
+    models: modelsSchema,
+    tool_annotations: toolAnnotationsSchema,
   },
 };
 

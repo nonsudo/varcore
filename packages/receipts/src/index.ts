@@ -101,6 +101,11 @@ const BASE_SIGNED_FIELDS = [
   "prev_receipt_hash",
   "sequence_number",
   "policy_bundle_hash",
+  // Mandate continuity fields (optional, signed when present)
+  "agent_class_id",
+  "mandate_id",
+  "mandate_version",
+  "chain_sequence",
 ] as const;
 
 const ACTION_RECEIPT_SIGNED_FIELDS = [
@@ -188,6 +193,11 @@ const POST_RECEIPT_SIGNED_FIELDS = [
   "billable_reason",
   "issued_at",
   "account_context", // D-1 Session A: required for RI-7 idempotency dedup scope
+  // Mandate continuity fields (optional, signed when present)
+  "agent_class_id",
+  "mandate_id",
+  "mandate_version",
+  "chain_sequence",
 ] as const;
 
 const RECOVERY_EVENT_SIGNED_FIELDS = [
@@ -205,6 +215,11 @@ const RECOVERY_EVENT_SIGNED_FIELDS = [
   "scan_window_minutes",
   "scan_receipts_examined",
   "issued_at",
+  // Mandate continuity fields (optional, signed when present)
+  "agent_class_id",
+  "mandate_id",
+  "mandate_version",
+  "chain_sequence",
 ] as const;
 
 const BUDGET_WARNING_SIGNED_FIELDS = [
@@ -222,6 +237,11 @@ const BUDGET_WARNING_SIGNED_FIELDS = [
   "cap",
   "threshold_pct",
   "issued_at",
+  // Mandate continuity fields (optional, signed when present)
+  "agent_class_id",
+  "mandate_id",
+  "mandate_version",
+  "chain_sequence",
 ] as const;
 
 const RESERVATION_EXPIRED_SIGNED_FIELDS = [
@@ -238,6 +258,11 @@ const RESERVATION_EXPIRED_SIGNED_FIELDS = [
   "currency",
   "reason",
   "issued_at",
+  // Mandate continuity fields (optional, signed when present)
+  "agent_class_id",
+  "mandate_id",
+  "mandate_version",
+  "chain_sequence",
 ] as const;
 
 const WORKFLOW_CLOSED_SIGNED_FIELDS = [

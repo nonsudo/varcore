@@ -90,6 +90,15 @@ interface BaseReceiptFields {
   policy_bundle_hash: string;   // sha256:<hex>
   rfc3161_token: string | null; // null in Phase 0
   tsa_id: string | null;        // null in Phase 0
+  // ── Mandate continuity fields (optional, signed when present) ──────────────
+  /** Stable identifier for the agent class, produced by computeAgentClassId(). */
+  agent_class_id?: string;
+  /** Identifier of the mandate this invocation was evaluated against. */
+  mandate_id?: string;
+  /** Version of the mandate at execution time, e.g. "v1.0.0". */
+  mandate_version?: string;
+  /** Position in the agent-class-level chain, 0-indexed. */
+  chain_sequence?: number;
 }
 
 // Section 3.2: action_receipt-only fields
@@ -216,6 +225,15 @@ export interface PostReceiptFields {
   account_context: string | null;
   rfc3161_token: string | null;     // NOT signed; populated by TSA worker
   tsa_id: string | null;            // NOT signed; populated by TSA worker
+  // ── Mandate continuity fields (optional, signed when present) ──────────────
+  /** Stable identifier for the agent class, produced by computeAgentClassId(). */
+  agent_class_id?: string;
+  /** Identifier of the mandate this invocation was evaluated against. */
+  mandate_id?: string;
+  /** Version of the mandate at execution time, e.g. "v1.0.0". */
+  mandate_version?: string;
+  /** Position in the agent-class-level chain, 0-indexed. */
+  chain_sequence?: number;
 }
 
 /**
@@ -240,6 +258,15 @@ export interface RecoveryEventFields {
   issued_at: string;                // ISO 8601
   rfc3161_token: string | null;     // NOT signed
   tsa_id: string | null;            // NOT signed
+  // ── Mandate continuity fields (optional, signed when present) ──────────────
+  /** Stable identifier for the agent class, produced by computeAgentClassId(). */
+  agent_class_id?: string;
+  /** Identifier of the mandate this invocation was evaluated against. */
+  mandate_id?: string;
+  /** Version of the mandate at execution time, e.g. "v1.0.0". */
+  mandate_version?: string;
+  /** Position in the agent-class-level chain, 0-indexed. */
+  chain_sequence?: number;
 }
 
 /**
@@ -263,6 +290,15 @@ export interface BudgetWarningFields {
   issued_at: string;                // ISO 8601
   rfc3161_token: string | null;     // NOT signed
   tsa_id: string | null;            // NOT signed
+  // ── Mandate continuity fields (optional, signed when present) ──────────────
+  /** Stable identifier for the agent class, produced by computeAgentClassId(). */
+  agent_class_id?: string;
+  /** Identifier of the mandate this invocation was evaluated against. */
+  mandate_id?: string;
+  /** Version of the mandate at execution time, e.g. "v1.0.0". */
+  mandate_version?: string;
+  /** Position in the agent-class-level chain, 0-indexed. */
+  chain_sequence?: number;
 }
 
 /**
@@ -285,6 +321,15 @@ export interface ReservationExpiredFields {
   issued_at: string;                // ISO 8601
   rfc3161_token: string | null;     // NOT signed
   tsa_id: string | null;            // NOT signed
+  // ── Mandate continuity fields (optional, signed when present) ──────────────
+  /** Stable identifier for the agent class, produced by computeAgentClassId(). */
+  agent_class_id?: string;
+  /** Identifier of the mandate this invocation was evaluated against. */
+  mandate_id?: string;
+  /** Version of the mandate at execution time, e.g. "v1.0.0". */
+  mandate_version?: string;
+  /** Position in the agent-class-level chain, 0-indexed. */
+  chain_sequence?: number;
 }
 
 /**

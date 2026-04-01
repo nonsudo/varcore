@@ -1,6 +1,8 @@
 export type { AgentAction, AgentActionResult, IProtocolAdapter } from "./types";
 export type { SigningProvider, PublicKeyJwk } from "./signing-provider";
 export { canonicalHash } from "./canonical-hash";
+export { computeAgentClassId } from "./agent-class-id";
+export type { AgentClassInput } from "./agent-class-id";
 export { varcoreLog } from "./logger";
 export type { LogLevel, VarcoreLogEntry } from "./logger";
 

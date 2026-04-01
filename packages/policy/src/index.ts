@@ -9,16 +9,21 @@ export type {
   PolicyRule,
   PolicyConfig,
   EvaluationResult,
+  EvaluationContext,
   ParamsCondition,
   ParamsBlock,
   SchemaPackDefinition,
+  NetworkPolicy,
+  FilesystemPolicy,
+  ModelsPolicy,
+  ToolAnnotation,
 } from "./types";
 export { evaluateParams } from "./params-evaluator";
 export type { ConditionResult } from "./params-evaluator";
 export { PolicyLoadError } from "./types";
 export { SCHEMA_PACKS, resolveSchemaPack } from "./schemas/index";
 
-import type { PolicyConfig, PolicyRule, EvaluationResult } from "./types";
+import type { PolicyConfig, PolicyRule, EvaluationResult, EvaluationContext } from "./types";
 
 /**
  * Merge schema pack rules into the operator rule set.
@@ -147,8 +152,105 @@ export function loadPolicy(yamlPath: string): PolicyConfig {
 export function evaluatePolicy(
   toolName: string,
   policy: PolicyConfig,
-  actionArguments?: Record<string, unknown>
+  actionArguments?: Record<string, unknown>,
+  context?: EvaluationContext
 ): EvaluationResult {
+  // ── Guard 1: Network egress ──────────────────────────────────────────────
+  if (policy.network && actionArguments) {
+    const net = policy.network;
+    for (const val of Object.values(actionArguments)) {
+      if (typeof val !== "string") continue;
+      if (!val.startsWith("http://") && !val.startsWith("https://")) continue;
+
+      const afterProtocol = val.slice(val.indexOf("://") + 3);
+      const hostname = afterProtocol.split("/")[0].split("?")[0].split("#")[0];
+
+      if (net.require_tls === true && val.startsWith("http://")) {
+        return { decision: "BLOCK", decision_reason: "network: require_tls violated",
+          blast_radius: "HIGH", reversible: false, matched_rule: "network:require_tls" };
+      }
+
+      for (const pattern of net.blocked_domains ?? []) {
+        if (hostname === pattern || hostname.endsWith("." + pattern)) {
+          return { decision: "BLOCK", decision_reason: "network: domain in blocklist",
+            blast_radius: "HIGH", reversible: false, matched_rule: "network:blocked_domain" };
+        }
+      }
+
+      if ((net.allowed_domains ?? []).length > 0) {
+        if (!net.allowed_domains!.includes(hostname)) {
+          return { decision: "BLOCK", decision_reason: "network: domain not in allowlist",
+            blast_radius: "HIGH", reversible: false, matched_rule: "network:allowed_domain" };
+        }
+      }
+    }
+  }
+
+  // ── Guard 2: Filesystem ──────────────────────────────────────────────────
+  if (policy.filesystem && actionArguments) {
+    const fsp = policy.filesystem;
+    for (const val of Object.values(actionArguments)) {
+      if (typeof val !== "string") continue;
+      if (!val.startsWith("/") && !val.startsWith("~/") && !val.startsWith("./") && !val.startsWith("../")) continue;
+
+      for (const prefix of fsp.blocked_paths ?? []) {
+        if (val.startsWith(prefix)) {
+          return { decision: "BLOCK", decision_reason: "filesystem: path in blocklist",
+            blast_radius: "HIGH", reversible: false, matched_rule: "filesystem:blocked_path" };
+        }
+      }
+
+      for (const ext of fsp.blocked_extensions ?? []) {
+        if (val.endsWith(ext)) {
+          return { decision: "BLOCK", decision_reason: "filesystem: extension blocked",
+            blast_radius: "HIGH", reversible: false, matched_rule: "filesystem:blocked_extension" };
+        }
+      }
+
+      if ((fsp.allowed_paths ?? []).length > 0) {
+        if (!fsp.allowed_paths!.some((p) => val.startsWith(p))) {
+          return { decision: "BLOCK", decision_reason: "filesystem: path not in allowlist",
+            blast_radius: "HIGH", reversible: false, matched_rule: "filesystem:allowed_path" };
+        }
+      }
+    }
+  }
+
+  // ── Guard 3: Models ──────────────────────────────────────────────────────
+  if (policy.models && context?.model_id) {
+    const modelId = context.model_id;
+    const mdl = policy.models;
+
+    for (const id of mdl.blocked ?? []) {
+      if (modelId === id) {
+        return { decision: "BLOCK", decision_reason: "models: model_id is blocked",
+          blast_radius: "CRITICAL", reversible: false, matched_rule: "models:blocked" };
+      }
+    }
+
+    if ((mdl.allowed ?? []).length > 0) {
+      if (!mdl.allowed!.includes(modelId)) {
+        return { decision: "BLOCK", decision_reason: "models: model_id not in allowlist",
+          blast_radius: "CRITICAL", reversible: false, matched_rule: "models:allowed" };
+      }
+    }
+  }
+
+  // ── Guard 4: Tool annotations ────────────────────────────────────────────
+  if (policy.tool_annotations) {
+    const annotation = policy.tool_annotations[toolName];
+    if (annotation) {
+      if (annotation.always_step_up === true) {
+        return { decision: "STEP_UP", decision_reason: "tool_annotation: always_step_up",
+          blast_radius: "HIGH", reversible: false, matched_rule: "tool_annotation:always_step_up" };
+      }
+      if (annotation.compliance_tier === "restricted" || annotation.compliance_tier === "system") {
+        return { decision: "STEP_UP", decision_reason: "tool_annotation: compliance_tier requires approval",
+          blast_radius: "HIGH", reversible: false, matched_rule: "tool_annotation:compliance_tier" };
+      }
+    }
+  }
+
   /**
    * Helper: evaluate params and return the ConditionResult, or null if actionArguments
    * were not provided (historical replay mode — params rules are skipped).

@@ -5,6 +5,10 @@
     "ActionReceiptFields": {
       "additionalProperties": false,
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
@@ -26,6 +30,10 @@
         "blast_radius": {
           "$ref": "#/definitions/BlastRadius"
         },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
+        },
         "decision": {
           "$ref": "#/definitions/Decision"
         },
@@ -36,6 +44,14 @@
           "type": "string"
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "money_action": {
@@ -170,6 +186,10 @@
           "description": "receipt_id of the action_receipt that triggered this approval flow.",
           "type": "string"
         },
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
@@ -192,7 +212,19 @@
             "null"
           ]
         },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
+        },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "policy_bundle_hash": {
@@ -293,6 +325,10 @@
       "additionalProperties": false,
       "description": "budget_warning — emitted when cumulative spend crosses 90% or 100% of max_spend. VAR-Money v1.0 §3.5.",
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
@@ -302,7 +338,19 @@
         "cap": {
           "type": "number"
         },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
+        },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "policy_bundle_hash": {
@@ -385,6 +433,10 @@
     "DeadLetterActionReceiptFields": {
       "additionalProperties": false,
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
@@ -406,6 +458,10 @@
         "blast_radius": {
           "$ref": "#/definitions/BlastRadius"
         },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
+        },
         "decision": {
           "$ref": "#/definitions/Decision"
         },
@@ -422,6 +478,14 @@
           "$ref": "#/definitions/FallbackPolicy"
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "money_action": {
@@ -587,6 +651,10 @@
             "null"
           ]
         },
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
@@ -595,6 +663,10 @@
         },
         "billable_reason": {
           "$ref": "#/definitions/BillableReason"
+        },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
         },
         "degraded_reason": {
           "type": [
@@ -615,6 +687,14 @@
           ]
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "policy_bundle_hash": {
@@ -757,13 +837,29 @@
       "additionalProperties": false,
       "description": "recovery_event — emitted as the first receipt after a proxy restart. Records integrity check results on the open-pre index. Implements RI-10 from docs/spec/var-core-v1.0.md §3.",
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
+        },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
         },
         "index_status": {
           "$ref": "#/definitions/IndexStatus"
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "policy_bundle_hash": {
@@ -852,16 +948,32 @@
       "additionalProperties": false,
       "description": "reservation_expired — emitted when a TIMEOUT-held reservation reaches its TTL. VAR-Money v1.0 §3.3 and RI-6 from docs/spec/var-core-v1.0.md §3.",
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
         "amount_released": {
           "type": "number"
         },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
+        },
         "currency": {
           "type": "string"
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "policy_bundle_hash": {
@@ -957,13 +1069,29 @@
     "WorkflowClosedFields": {
       "additionalProperties": false,
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
+        },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
         },
         "close_reason": {
           "$ref": "#/definitions/CloseReason"
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "policy_bundle_hash": {
@@ -1055,6 +1183,10 @@
     "WorkflowManifestFields": {
       "additionalProperties": false,
       "properties": {
+        "agent_class_id": {
+          "description": "Stable identifier for the agent class, produced by computeAgentClassId().",
+          "type": "string"
+        },
         "agent_id": {
           "type": "string"
         },
@@ -1063,6 +1195,10 @@
             "string",
             "null"
           ]
+        },
+        "chain_sequence": {
+          "description": "Position in the agent-class-level chain, 0-indexed.",
+          "type": "number"
         },
         "declared_tools": {
           "items": {
@@ -1084,6 +1220,14 @@
           "type": "string"
         },
         "issued_at": {
+          "type": "string"
+        },
+        "mandate_id": {
+          "description": "Identifier of the mandate this invocation was evaluated against.",
+          "type": "string"
+        },
+        "mandate_version": {
+          "description": "Version of the mandate at execution time, e.g. \"v1.0.0\".",
           "type": "string"
         },
         "mode": {
