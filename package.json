@@ -16,11 +16,13 @@
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present"
+    "lint": "npm run lint --workspaces --if-present",
+    "generate:schemas": "ts-json-schema-generator --path packages/receipts/src/types.ts --type ReceiptFields --tsconfig packages/receipts/tsconfig.json --out schema-server/public/var/v1/schema.json"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
-    "eslint": "^10.0.2"
+    "eslint": "^10.0.2",
+    "ts-json-schema-generator": "^2.9.0"
   }
 }

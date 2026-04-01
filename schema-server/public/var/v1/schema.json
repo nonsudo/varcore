@@ -1,0 +1,1185 @@
+{
+  "$ref": "#/definitions/ReceiptFields",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ActionReceiptFields": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "amount_minor_units": {
+          "description": "Amount in minor units from the validated request parameter. Null for non-money actions.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "billable": {
+          "description": "Whether this action is billable per VAR-Money v1.0 §6.",
+          "type": "boolean"
+        },
+        "billable_reason": {
+          "$ref": "#/definitions/BillableReason",
+          "description": "Human-readable reason for billability classification."
+        },
+        "blast_radius": {
+          "$ref": "#/definitions/BlastRadius"
+        },
+        "decision": {
+          "$ref": "#/definitions/Decision"
+        },
+        "decision_order": {
+          "type": "number"
+        },
+        "decision_reason": {
+          "type": "string"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "money_action": {
+          "description": "Whether this action is a money action per VAR-Money v1.0 §2.",
+          "type": "boolean"
+        },
+        "params_canonical_hash": {
+          "type": "string"
+        },
+        "pending_approval_id": {
+          "description": "ULID of the approval_receipt that resolved this STEP_UP decision. Set only when the approval engine is active and a STEP_UP decision is pending. Null for non-STEP_UP actions.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "queue_status": {
+          "$ref": "#/definitions/QueueStatus"
+        },
+        "queue_timeout_ms": {
+          "type": "number"
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "action_receipt",
+          "type": "string"
+        },
+        "response_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reversible": {
+          "type": "boolean"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "state_version_after": {
+          "type": "number"
+        },
+        "state_version_before": {
+          "type": "number"
+        },
+        "tool_name": {
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upstream_call_initiated": {
+          "description": "Whether the upstream tool server was called before this receipt was written. true  — upstream was called (completed or timed out before response). false — upstream was NOT called (proxy-guard BLOCK: params_too_large, undeclared_tool,          declared_tools_unavailable) or VCB DEAD_LETTER. null  — regular COMPLETED receipt (ALLOW, policy BLOCK, STEP_UP, FAIL_OPEN);          upstream call status is not separately tracked for these outcomes. Absent on receipts written by test utilities that do not exercise the upstream path.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        },
+        "workflow_id_source": {
+          "$ref": "#/definitions/WorkflowIdSource"
+        }
+      },
+      "required": [
+        "agent_id",
+        "blast_radius",
+        "decision",
+        "decision_order",
+        "decision_reason",
+        "issued_at",
+        "params_canonical_hash",
+        "policy_bundle_hash",
+        "prev_receipt_hash",
+        "queue_status",
+        "queue_timeout_ms",
+        "receipt_id",
+        "record_type",
+        "response_hash",
+        "reversible",
+        "rfc3161_token",
+        "sequence_number",
+        "spec_version",
+        "state_version_after",
+        "state_version_before",
+        "tool_name",
+        "tsa_id",
+        "workflow_id",
+        "workflow_id_source"
+      ],
+      "type": "object"
+    },
+    "ApprovalOutcome": {
+      "description": "Terminal outcome of a STEP_UP approval request.",
+      "enum": [
+        "APPROVED",
+        "DENIED",
+        "TIMEOUT"
+      ],
+      "type": "string"
+    },
+    "ApprovalReceiptFields": {
+      "additionalProperties": false,
+      "description": "approval_receipt — emitted when a STEP_UP decision triggers the approval engine. Chain position: immediately after the corresponding action_receipt. VAR-Money v1.0 §3.4 (Group 3 — STEP_UP approval engine).",
+      "properties": {
+        "action_receipt_id": {
+          "description": "receipt_id of the action_receipt that triggered this approval flow.",
+          "type": "string"
+        },
+        "agent_id": {
+          "type": "string"
+        },
+        "approval_dir": {
+          "description": "Directory where approval files are polled.",
+          "type": "string"
+        },
+        "approval_outcome": {
+          "$ref": "#/definitions/ApprovalOutcome",
+          "description": "Final outcome of the approval request."
+        },
+        "approval_receipt_id": {
+          "description": "ULID — unique ID for this approval receipt.",
+          "type": "string"
+        },
+        "approver": {
+          "description": "Who approved/denied the request (from approve/deny file content), or null.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "approval_receipt",
+          "type": "string"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "tool_name": {
+          "description": "Tool name for cross-reference.",
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wait_duration_ms": {
+          "description": "How long we waited before the decision or timeout (ms).",
+          "type": "number"
+        },
+        "workflow_id": {
+          "type": "string"
+        },
+        "workflow_id_source": {
+          "$ref": "#/definitions/WorkflowIdSource"
+        }
+      },
+      "required": [
+        "action_receipt_id",
+        "agent_id",
+        "approval_dir",
+        "approval_outcome",
+        "approval_receipt_id",
+        "approver",
+        "issued_at",
+        "policy_bundle_hash",
+        "prev_receipt_hash",
+        "receipt_id",
+        "record_type",
+        "rfc3161_token",
+        "sequence_number",
+        "spec_version",
+        "tool_name",
+        "tsa_id",
+        "wait_duration_ms",
+        "workflow_id",
+        "workflow_id_source"
+      ],
+      "type": "object"
+    },
+    "BillableReason": {
+      "description": "Why an action_receipt is or is not billable (VAR-Money v1.0 §6).",
+      "enum": [
+        "MONEY_ACTION_ATTEMPT",
+        "PROXY_GUARD",
+        "DEGRADED_SESSION",
+        "SIMULATION",
+        "READ_ONLY",
+        "INTERNAL"
+      ],
+      "type": "string"
+    },
+    "BlastRadius": {
+      "enum": [
+        "LOW",
+        "MED",
+        "HIGH",
+        "CRITICAL"
+      ],
+      "type": "string"
+    },
+    "BudgetWarningFields": {
+      "additionalProperties": false,
+      "description": "budget_warning — emitted when cumulative spend crosses 90% or 100% of max_spend. VAR-Money v1.0 §3.5.",
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "budget_warning_id": {
+          "type": "string"
+        },
+        "cap": {
+          "type": "number"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "budget_warning",
+          "type": "string"
+        },
+        "reserved": {
+          "type": "number"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "spent": {
+          "type": "number"
+        },
+        "threshold_pct": {
+          "enum": [
+            90,
+            100
+          ],
+          "type": "number"
+        },
+        "tool_name": {
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "budget_warning_id",
+        "record_type",
+        "spec_version",
+        "workflow_id",
+        "agent_id",
+        "sequence_number",
+        "prev_receipt_hash",
+        "policy_bundle_hash",
+        "tool_name",
+        "spent",
+        "reserved",
+        "cap",
+        "threshold_pct",
+        "issued_at",
+        "rfc3161_token",
+        "tsa_id"
+      ],
+      "type": "object"
+    },
+    "CloseReason": {
+      "enum": [
+        "connection_teardown",
+        "ttl_expired",
+        "explicit_close"
+      ],
+      "type": "string"
+    },
+    "DeadLetterActionReceiptFields": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "amount_minor_units": {
+          "description": "Amount in minor units from the validated request parameter. Null for non-money actions.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "billable": {
+          "description": "Whether this action is billable per VAR-Money v1.0 §6.",
+          "type": "boolean"
+        },
+        "billable_reason": {
+          "$ref": "#/definitions/BillableReason",
+          "description": "Human-readable reason for billability classification."
+        },
+        "blast_radius": {
+          "$ref": "#/definitions/BlastRadius"
+        },
+        "decision": {
+          "$ref": "#/definitions/Decision"
+        },
+        "decision_order": {
+          "type": "number"
+        },
+        "decision_reason": {
+          "type": "string"
+        },
+        "failure_reason": {
+          "type": "string"
+        },
+        "fallback_policy": {
+          "$ref": "#/definitions/FallbackPolicy"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "money_action": {
+          "description": "Whether this action is a money action per VAR-Money v1.0 §2.",
+          "type": "boolean"
+        },
+        "params_canonical_hash": {
+          "type": "string"
+        },
+        "pending_approval_id": {
+          "description": "ULID of the approval_receipt that resolved this STEP_UP decision. Set only when the approval engine is active and a STEP_UP decision is pending. Null for non-STEP_UP actions.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "queue_status": {
+          "const": "DEAD_LETTER",
+          "type": "string"
+        },
+        "queue_timeout_ms": {
+          "type": "number"
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "action_receipt",
+          "type": "string"
+        },
+        "response_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reversible": {
+          "type": "boolean"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "state_version_after": {
+          "type": "number"
+        },
+        "state_version_before": {
+          "type": "number"
+        },
+        "tool_name": {
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upstream_call_initiated": {
+          "description": "Whether the upstream tool server was called before this receipt was written. true  — upstream was called (completed or timed out before response). false — upstream was NOT called (proxy-guard BLOCK: params_too_large, undeclared_tool,          declared_tools_unavailable) or VCB DEAD_LETTER. null  — regular COMPLETED receipt (ALLOW, policy BLOCK, STEP_UP, FAIL_OPEN);          upstream call status is not separately tracked for these outcomes. Absent on receipts written by test utilities that do not exercise the upstream path.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        },
+        "workflow_id_source": {
+          "$ref": "#/definitions/WorkflowIdSource"
+        }
+      },
+      "required": [
+        "agent_id",
+        "blast_radius",
+        "decision",
+        "decision_order",
+        "decision_reason",
+        "failure_reason",
+        "fallback_policy",
+        "issued_at",
+        "params_canonical_hash",
+        "policy_bundle_hash",
+        "prev_receipt_hash",
+        "queue_status",
+        "queue_timeout_ms",
+        "receipt_id",
+        "record_type",
+        "response_hash",
+        "reversible",
+        "rfc3161_token",
+        "sequence_number",
+        "spec_version",
+        "state_version_after",
+        "state_version_before",
+        "tool_name",
+        "tsa_id",
+        "workflow_id",
+        "workflow_id_source"
+      ],
+      "type": "object"
+    },
+    "Decision": {
+      "enum": [
+        "ALLOW",
+        "BLOCK",
+        "FAIL_OPEN",
+        "FAIL_CLOSED",
+        "STEP_UP"
+      ],
+      "type": "string"
+    },
+    "DeploymentMode": {
+      "description": "Deployment mode (docs/spec/var-core-v1.0.md §1.1). Run is reserved for v1.1.",
+      "enum": [
+        "crawl",
+        "walk",
+        "run"
+      ],
+      "type": "string"
+    },
+    "FallbackPolicy": {
+      "enum": [
+        "fail_closed",
+        "fail_open"
+      ],
+      "type": "string"
+    },
+    "IndexStatus": {
+      "description": "Open-pre journal integrity status after proxy restart.",
+      "enum": [
+        "OK",
+        "CORRUPT"
+      ],
+      "type": "string"
+    },
+    "PostReceiptFields": {
+      "additionalProperties": false,
+      "description": "post_receipt — emitted once per ALLOW'd money action with the terminal outcome. Chain position: immediately after the corresponding action_receipt.\n\nD-1 deviation (Session A): account_context field added (not in spec doc) for RI-7 idempotency deduplication scope. Signed.",
+      "properties": {
+        "account_context": {
+          "description": "D-1 Session A: account_context for RI-7 idempotency deduplication scope. Signed.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "agent_id": {
+          "type": "string"
+        },
+        "billable": {
+          "type": "boolean"
+        },
+        "billable_reason": {
+          "$ref": "#/definitions/BillableReason"
+        },
+        "degraded_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "execution_end_ms": {
+          "type": "number"
+        },
+        "execution_start_ms": {
+          "type": "number"
+        },
+        "idempotency_key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "post_receipt_id": {
+          "type": "string"
+        },
+        "pre_receipt_id": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": "string"
+        },
+        "projection_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "projection_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "record_type": {
+          "const": "post_receipt",
+          "type": "string"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "terminal_outcome": {
+          "$ref": "#/definitions/TerminalOutcome"
+        },
+        "tool_call_correlation_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_name": {
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "upstream_response_digest": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "post_receipt_id",
+        "record_type",
+        "spec_version",
+        "pre_receipt_id",
+        "workflow_id",
+        "agent_id",
+        "sequence_number",
+        "prev_receipt_hash",
+        "policy_bundle_hash",
+        "tool_name",
+        "terminal_outcome",
+        "upstream_response_digest",
+        "projection_id",
+        "projection_hash",
+        "idempotency_key",
+        "tool_call_correlation_id",
+        "execution_start_ms",
+        "execution_end_ms",
+        "degraded_reason",
+        "billable",
+        "billable_reason",
+        "issued_at",
+        "account_context",
+        "rfc3161_token",
+        "tsa_id"
+      ],
+      "type": "object"
+    },
+    "QueueStatus": {
+      "enum": [
+        "COMPLETED",
+        "DEAD_LETTER"
+      ],
+      "type": "string"
+    },
+    "ReceiptFields": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/WorkflowManifestFields"
+        },
+        {
+          "$ref": "#/definitions/ActionReceiptFields"
+        },
+        {
+          "$ref": "#/definitions/DeadLetterActionReceiptFields"
+        },
+        {
+          "$ref": "#/definitions/WorkflowClosedFields"
+        },
+        {
+          "$ref": "#/definitions/PostReceiptFields"
+        },
+        {
+          "$ref": "#/definitions/RecoveryEventFields"
+        },
+        {
+          "$ref": "#/definitions/BudgetWarningFields"
+        },
+        {
+          "$ref": "#/definitions/ReservationExpiredFields"
+        },
+        {
+          "$ref": "#/definitions/ApprovalReceiptFields"
+        }
+      ]
+    },
+    "RecoveryEventFields": {
+      "additionalProperties": false,
+      "description": "recovery_event — emitted as the first receipt after a proxy restart. Records integrity check results on the open-pre index. Implements RI-10 from docs/spec/var-core-v1.0.md §3.",
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "index_status": {
+          "$ref": "#/definitions/IndexStatus"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "recovery_event",
+          "type": "string"
+        },
+        "recovered_open_pres_count": {
+          "type": "number"
+        },
+        "recovery_event_id": {
+          "type": "string"
+        },
+        "recovery_method": {
+          "$ref": "#/definitions/RecoveryMethod"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scan_receipts_examined": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "scan_window_minutes": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "recovery_event_id",
+        "record_type",
+        "spec_version",
+        "workflow_id",
+        "agent_id",
+        "sequence_number",
+        "prev_receipt_hash",
+        "policy_bundle_hash",
+        "recovered_open_pres_count",
+        "index_status",
+        "recovery_method",
+        "scan_window_minutes",
+        "scan_receipts_examined",
+        "issued_at",
+        "rfc3161_token",
+        "tsa_id"
+      ],
+      "type": "object"
+    },
+    "RecoveryMethod": {
+      "description": "Recovery method used during startup integrity check.",
+      "enum": [
+        "INDEX",
+        "CHECKPOINT"
+      ],
+      "type": "string"
+    },
+    "ReservationExpiredFields": {
+      "additionalProperties": false,
+      "description": "reservation_expired — emitted when a TIMEOUT-held reservation reaches its TTL. VAR-Money v1.0 §3.3 and RI-6 from docs/spec/var-core-v1.0.md §3.",
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "amount_released": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "pre_receipt_id": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/definitions/ReservationReason"
+        },
+        "record_type": {
+          "const": "reservation_expired",
+          "type": "string"
+        },
+        "reservation_expired_id": {
+          "type": "string"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reservation_expired_id",
+        "record_type",
+        "spec_version",
+        "workflow_id",
+        "agent_id",
+        "sequence_number",
+        "prev_receipt_hash",
+        "policy_bundle_hash",
+        "pre_receipt_id",
+        "amount_released",
+        "currency",
+        "reason",
+        "issued_at",
+        "rfc3161_token",
+        "tsa_id"
+      ],
+      "type": "object"
+    },
+    "ReservationReason": {
+      "description": "Why a budget reservation was released.",
+      "enum": [
+        "TTL_EXPIRY",
+        "MANUAL_RELEASE"
+      ],
+      "type": "string"
+    },
+    "TaxonomyStatus": {
+      "description": "Taxonomy manifest load status at session start.",
+      "enum": [
+        "OK",
+        "CACHED",
+        "UNAVAILABLE"
+      ],
+      "type": "string"
+    },
+    "TerminalOutcome": {
+      "description": "Terminal outcome for a money action post_receipt (docs/reference/receipt-types.md).",
+      "enum": [
+        "SUCCESS",
+        "DENIED",
+        "ESCALATED",
+        "TIMEOUT",
+        "ERROR",
+        "CANCELED"
+      ],
+      "type": "string"
+    },
+    "WorkflowClosedFields": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "close_reason": {
+          "$ref": "#/definitions/CloseReason"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "workflow_closed",
+          "type": "string"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "session_duration_ms": {
+          "type": "number"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "total_blocked": {
+          "type": "number"
+        },
+        "total_calls": {
+          "type": "number"
+        },
+        "total_spend": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        },
+        "workflow_id_source": {
+          "$ref": "#/definitions/WorkflowIdSource"
+        }
+      },
+      "required": [
+        "agent_id",
+        "close_reason",
+        "issued_at",
+        "policy_bundle_hash",
+        "prev_receipt_hash",
+        "receipt_id",
+        "record_type",
+        "rfc3161_token",
+        "sequence_number",
+        "session_duration_ms",
+        "spec_version",
+        "total_blocked",
+        "total_calls",
+        "total_spend",
+        "tsa_id",
+        "workflow_id",
+        "workflow_id_source"
+      ],
+      "type": "object"
+    },
+    "WorkflowIdSource": {
+      "enum": [
+        "nonsudo_generated",
+        "framework_mapped",
+        "parent_join"
+      ],
+      "type": "string"
+    },
+    "WorkflowManifestFields": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_id": {
+          "type": "string"
+        },
+        "capability_manifest_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "declared_tools": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "declared_tools_fetch_failed": {
+          "description": "Set to true when the proxy's tools/list fetch failed at session creation. Makes the infrastructure failure visible in the audit trail. Absent (undefined) when the fetch succeeded or returned empty.",
+          "type": "boolean"
+        },
+        "framework_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "initiator_id": {
+          "type": "string"
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/definitions/DeploymentMode",
+          "description": "Deployment mode active for this session. Defaults to \"walk\"."
+        },
+        "money_action_overrides": {
+          "description": "Tool names explicitly overridden via unsafe_override: true in policy.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "parent_workflow_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "policy_bundle_hash": {
+          "type": "string"
+        },
+        "prev_receipt_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "record_type": {
+          "const": "workflow_manifest",
+          "type": "string"
+        },
+        "rfc3161_token": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sequence_number": {
+          "type": "number"
+        },
+        "session_budget": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "type": "object"
+        },
+        "spec_version": {
+          "const": "var/1.0",
+          "type": "string"
+        },
+        "taxonomy_status": {
+          "$ref": "#/definitions/TaxonomyStatus",
+          "description": "Status of the VAR-Money taxonomy manifest at session start."
+        },
+        "tsa_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workflow_id": {
+          "type": "string"
+        },
+        "workflow_id_source": {
+          "$ref": "#/definitions/WorkflowIdSource"
+        },
+        "workflow_owner": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_id",
+        "capability_manifest_hash",
+        "declared_tools",
+        "framework_ref",
+        "initiator_id",
+        "issued_at",
+        "parent_workflow_id",
+        "policy_bundle_hash",
+        "prev_receipt_hash",
+        "receipt_id",
+        "record_type",
+        "rfc3161_token",
+        "sequence_number",
+        "session_budget",
+        "spec_version",
+        "tsa_id",
+        "workflow_id",
+        "workflow_id_source",
+        "workflow_owner"
+      ],
+      "type": "object"
+    }
+  }
+}

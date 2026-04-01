@@ -5,7 +5,7 @@
 
 This document is the complete reference for all VAR v1.0 receipt types. The existing
 types (`workflow_manifest`, `action_receipt`, `workflow_closed`) are defined in
-`docs/reference/contract.md`. This document adds four new types introduced with
+`docs/reference/contract.md`. This document adds five new types introduced with
 VAR-Money v1.0 and the Walk/Run mode enforcement model.
 
 For signing rules, canonicalization, and chain rules, see `docs/reference/contract.md §4–6`.
@@ -96,10 +96,10 @@ Implements RI-10 from `docs/spec/var-core-v1.0.md §3`.
 | `prev_receipt_hash` | string (sha256:hex) | yes | no | SHA-256 of the JCS-canonical last receipt before the crash. |
 | `policy_bundle_hash` | string (sha256:hex) | yes | no | Policy bundle hash at restart time. |
 | `recovered_open_pres_count` | integer | yes | no | Number of `action_receipt` records found without a corresponding `post_receipt`. |
-| `index_status` | enum | yes | no | `OK \| REBUILT \| CORRUPT`. `OK`: index was intact. `REBUILT`: index was missing and reconstructed from the chain scan. `CORRUPT`: scan was insufficient to confirm clean state. |
-| `recovery_method` | enum | yes | no | `INDEX \| BOUNDED_SCAN`. `INDEX`: index was used directly (status OK). `BOUNDED_SCAN`: chain was scanned (status REBUILT or CORRUPT). |
-| `scan_window_minutes` | integer | yes | yes | Duration of the bounded scan in minutes. Null if `recovery_method: INDEX`. |
-| `scan_receipts_examined` | integer | yes | yes | Number of receipts examined during the scan. Null if `recovery_method: INDEX`. |
+| `index_status` | enum | yes | no | `OK \| CORRUPT`. `OK`: the recovery integrity check completed without detecting corruption. `CORRUPT`: the recovery integrity check could not confirm clean state. |
+| `recovery_method` | enum | yes | no | `INDEX \| CHECKPOINT`. `INDEX`: recovery used the persisted open-pre index directly. `CHECKPOINT`: recovery used the checkpoint-based fallback path. |
+| `scan_window_minutes` | integer | yes | yes | Reserved field. Always null in v1.0. |
+| `scan_receipts_examined` | integer | yes | yes | Reserved field. Always null in v1.0. |
 | `issued_at` | string (ISO 8601) | yes | no | UTC timestamp at receipt generation. |
 | `signature` | object | n/a | no | See `contract.md §4`. Not included in signing payload. |
 | `rfc3161_token` | string | no | yes | Base64-encoded RFC 3161 TSA token. Null at signing; populated asynchronously. |
@@ -109,6 +109,43 @@ Implements RI-10 from `docs/spec/var-core-v1.0.md §3`.
 L2: WARN — `RECOVERY_INCOMPLETE`. The chain is structurally valid (L2: PASS) but the
 verifier must note that outcome completeness cannot be guaranteed for the period before
 the crash.
+
+---
+
+### `approval_receipt`
+
+Emitted when an `action_receipt` produces `decision: STEP_UP` and the approval engine
+records the final approval outcome for that action.
+
+**Chain position:** Emitted immediately after the `action_receipt` that produced
+`decision: STEP_UP`.
+
+| Field | Type | Signed | Nullable | Description |
+|-------|------|--------|----------|-------------|
+| `receipt_id` | string (ULID) | yes | no | Base receipt identifier for this approval receipt. |
+| `record_type` | string | yes | no | Always `"approval_receipt"`. |
+| `spec_version` | string | yes | no | Always `"var/1.0"`. |
+| `workflow_id` | string | yes | no | Workflow ID shared with the triggering `action_receipt`. |
+| `workflow_id_source` | enum | yes | no | `nonsudo_generated \| framework_mapped \| parent_join`. |
+| `agent_id` | string | yes | no | Agent identifier. Matches the manifest and triggering receipt. |
+| `issued_at` | string (RFC3339) | yes | no | UTC timestamp at receipt generation. |
+| `prev_receipt_hash` | string \| null | yes | yes | SHA-256 of the JCS-canonical previous receipt. In practice this chains to the triggering `action_receipt`. |
+| `sequence_number` | integer | yes | no | Next sequence number in the workflow chain. |
+| `policy_bundle_hash` | string (sha256:hex) | yes | no | Policy bundle hash in effect. |
+| `action_receipt_id` | string (ULID) | yes | no | The `receipt_id` of the `action_receipt` that triggered approval. |
+| `approval_receipt_id` | string (ULID) | yes | no | Unique ID for this approval receipt. |
+| `tool_name` | string | yes | no | Tool name for cross-reference with the triggering receipt. |
+| `approval_outcome` | enum | yes | no | `APPROVED \| DENIED \| TIMEOUT`. |
+| `approver` | string | yes | yes | Identity of the approver/denier, or null on timeout or unavailable identity. |
+| `approval_dir` | string | yes | no | Directory where approval files are polled. |
+| `wait_duration_ms` | integer | yes | no | Total time spent waiting for the approval decision, in milliseconds. |
+| `signature` | object | n/a | no | See `contract.md §4`. Not included in signing payload. |
+| `rfc3161_token` | string | no | yes | Base64-encoded RFC 3161 TSA token. Null at signing; populated asynchronously. |
+| `tsa_id` | string | no | yes | TSA identifier. Null at signing; populated alongside `rfc3161_token`. |
+
+**Signing coverage:** The signing payload includes every field marked `Signed = yes`
+above. It excludes `signature` because it is the output of signing, and excludes
+`rfc3161_token` and `tsa_id` because they are attached after signing by the TSA worker.
 
 ---
 
@@ -187,6 +224,7 @@ corresponding TIMEOUT `post_receipt` (via `pre_receipt_id`) is L4: FAIL —
 | `action_receipt` | contract.md §3.2, §3.3 | Every tool call evaluation | Conditional |
 | `workflow_closed` | contract.md §3.5 | Session end | No |
 | `post_receipt` | This document | After every ALLOW'd money action | No |
+| `approval_receipt` | This document | Immediately after an `action_receipt` with `decision: STEP_UP` | No |
 | `recovery_event` | This document | Proxy restart, before new actions | No |
 | `budget_warning` | This document | Budget threshold crossed (90%, 100%) | No |
 | `reservation_expired` | This document | TIMEOUT reservation TTL expiry | No |

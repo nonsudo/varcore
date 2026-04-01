@@ -1,3 +1,5 @@
+import receiptSchema from "../public/var/v1/schema.json";
+
 /**
  * schemas.nonsudo.com — Cloudflare Worker
  *
@@ -31,6 +33,17 @@ function jsonResponse(body: unknown, status = 200): Response {
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "public, max-age=31536000, immutable", // keys are immutable
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+}
+
+function cachedJsonResponse(body: unknown, maxAgeSeconds: number, status = 200): Response {
+  return new Response(JSON.stringify(body, null, 2), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": `public, max-age=${maxAgeSeconds}`,
       "Access-Control-Allow-Origin": "*",
     },
   });
@@ -78,58 +91,25 @@ export default {
     if (pathname === "/var/v1/test-vectors.json") {
       const vectors = env["TEST_VECTORS_V1"];
       if (!vectors) {
-        return notFound("Test vectors not available");
-      }
-      try {
-        const parsed = JSON.parse(vectors) as unknown;
-        return new Response(JSON.stringify(parsed, null, 2), {
-          status: 200,
+        return new Response(JSON.stringify({ error: "Test vectors not available" }), {
+          status: 503,
           headers: {
             "Content-Type": "application/json",
-            "Cache-Control": "public, max-age=3600",
             "Access-Control-Allow-Origin": "*",
           },
         });
+      }
+      try {
+        const parsed = JSON.parse(vectors) as unknown;
+        return cachedJsonResponse(parsed, 3600);
       } catch {
         return notFound("Test vectors data malformed");
       }
     }
 
-    // GET /var/v1/schema.json (reserved)
+    // GET /var/v1/schema.json
     if (pathname === "/var/v1/schema.json") {
-      return jsonResponse({
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "https://schemas.nonsudo.com/var/v1/schema.json",
-        "title": "VAR v1 Receipt",
-        "description": "Verifiable Action Receipt — VAR protocol v1.0 (reserved, schema TBD)",
-        "type": "object",
-        "required": ["receipt_id", "record_type", "spec_version", "workflow_id", "signature"],
-        "properties": {
-          "spec_version": { "type": "string", "const": "var/1.0" },
-          "record_type": {
-            "type": "string",
-            "enum": [
-              "workflow_manifest",
-              "action_receipt",
-              "workflow_closed",
-              "post_receipt",
-              "approval_receipt",
-              "recovery_event",
-              "budget_warning",
-              "reservation_expired"
-            ]
-          },
-          "signature": {
-            "type": "object",
-            "required": ["alg", "key_id", "sig"],
-            "properties": {
-              "alg": { "type": "string", "const": "Ed25519" },
-              "key_id": { "type": "string" },
-              "sig": { "type": "string", "description": "base64url-encoded Ed25519 signature" }
-            }
-          }
-        }
-      });
+      return cachedJsonResponse(receiptSchema, 3600);
     }
 
     return new Response(JSON.stringify({ error: "Not found" }), {

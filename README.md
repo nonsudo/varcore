@@ -49,21 +49,35 @@ whether allowed or blocked.
 
 ```json
 {
-  "var_id": "var_01J5Q7XP8R2NKWZ9T4MVCLB3Y",
-  "schema_version": "1.0.0",
+  "receipt_id": "01J5Q7XP8R2NKWZ9T4MVCLB3Y",
   "record_type": "action_receipt",
+  "spec_version": "var/1.0",
+  "workflow_id": "wf_01J5Q7XN4K1R8K5P0X2B6M7N8Q",
+  "workflow_id_source": "nonsudo_generated",
   "tool_name": "stripe.refunds.create",
+  "params_canonical_hash": "sha256:6fb2c7f0b7d0d1e90a1d7d2b66baf1283d40b5f4d7b8f7f5f0a1d2c3b4e5f678",
   "decision": "BLOCK",
+  "decision_reason": "Refund amount exceeds policy threshold",
+  "decision_order": 2,
+  "queue_status": "COMPLETED",
+  "queue_timeout_ms": 5000,
   "blast_radius": "HIGH",
+  "reversible": true,
+  "state_version_before": 12,
+  "state_version_after": 13,
   "policy_bundle_hash": "sha256:abc123...",
   "agent_id": "agent_prod_01",
   "sequence_number": 4,
   "prev_receipt_hash": "sha256:a14f8c...d02e91",
-  "response_entropy_hash": "sha256:7b2f9a...",
+  "response_hash": "sha256:7b2f9a...",
   "issued_at": "2026-03-20T09:22:31.411Z",
-  "timestamp_rfc3161": "base64:MIIG...",
-  "signature": "ed25519:3d9f2a...",
-  "schema_url": "https://schemas.nonsudo.com/v1/receipt"
+  "rfc3161_token": "base64:MIIG...",
+  "tsa_id": "digicert",
+  "signature": {
+    "alg": "Ed25519",
+    "key_id": "ns-prod-01",
+    "sig": "3d9f2a..."
+  }
 }
 ```
 

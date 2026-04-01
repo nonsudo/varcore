@@ -19,6 +19,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm install
+      - name: Check schema drift
+        run: |
+          npm run generate:schemas
+          git diff --exit-code schema-server/public/var/v1/schema.json || \
+            (echo "Schema drift detected: run npm run generate:schemas and commit" && exit 1)
+      - name: Install schema-server deps
+        run: npm --prefix schema-server install --no-package-lock
+      - name: Typecheck schema-server
+        run: npm --prefix schema-server run typecheck
       - run: npm run build
       - name: Lint
         run: npm run lint
