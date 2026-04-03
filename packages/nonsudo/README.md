@@ -2,28 +2,62 @@
 
 Mandate enforcement and cryptographic receipts for AI agents.
 
-## What is this?
-
-This is the convenience entry point for the [NonSudo](https://nonsudo.com) open-source protocol. It re-exports `@varcore/core` and provides the `nonsudo` CLI command.
-
 ## Install
 
 ```bash
 npm install nonsudo
 ```
 
-For direct access to individual packages:
+## Usage
+
+### Receipt API
+
+```typescript
+import { createReceipt, signReceipt, chainReceipt, verifyChain } from 'nonsudo';
+```
+
+### Policy engine
+
+```typescript
+import { loadPolicy, evaluatePolicy } from 'nonsudo/policy';
+```
+
+### OpenAI adapter
+
+```typescript
+import { createActionReceipt } from 'nonsudo/adapter-openai';
+```
+
+### LangChain adapter
+
+```typescript
+import { createNonSudoCallbacks } from 'nonsudo/adapter-langchain';
+
+const llm = new ChatOpenAI({ callbacks: createNonSudoCallbacks(config) });
+```
+
+### Receipt store
+
+```typescript
+import { ReceiptStore } from 'nonsudo/store';
+```
+
+## CLI
 
 ```bash
-npm install @varcore/core @varcore/receipts
+nonsudo verify receipts.ndjson         # L1 + L2 verification
+nonsudo verify receipts.ndjson --full  # L1 + L2 + L3 + L4
+nonsudo conform                        # conformance test vectors
 ```
+
+## For implementers
+
+The `@varcore/*` packages are the underlying open standard implementation.
+Any implementation conforming to the VAR-Core spec can reference them directly.
+Full spec: https://github.com/nonsudo/varcore
 
 ## Links
 
-- **Full platform:** https://nonsudo.com/docs/quickstart
-- **Open standard (VAR-Core):** https://github.com/nonsudo/varcore
+- **Platform:** https://nonsudo.com/docs/quickstart
 - **Schema registry:** https://schemas.nonsudo.com
-
-## License
-
-Apache-2.0
+- **License:** Apache-2.0
