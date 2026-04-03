@@ -38,7 +38,7 @@ const MODE_ALIASES: Record<string, DeploymentMode> = {
 function normalizeMode(raw: string): DeploymentMode {
   if (raw in MODE_ALIASES) {
     const normalized = MODE_ALIASES[raw as keyof typeof MODE_ALIASES];
-    console.warn(`[nonsudo] mode "${raw}" deprecated. Use "${normalized}".`);
+    process.stderr.write(`[nonsudo] mode "${raw}" deprecated. Use "${normalized}".\n`);
     return normalized;
   }
   return raw as DeploymentMode;
@@ -202,8 +202,9 @@ export function evaluatePolicy(
         }
       }
 
-      if ((net.allowed_domains ?? []).length > 0) {
-        if (!net.allowed_domains!.includes(hostname)) {
+      const allowedDomains = net.allowed_domains ?? [];
+      if (allowedDomains.length > 0) {
+        if (!allowedDomains.includes(hostname)) {
           return { decision: "BLOCK", decision_reason: "network: domain not in allowlist",
             blast_radius: "HIGH", reversible: false, matched_rule: "network:allowed_domain" };
         }
@@ -232,8 +233,9 @@ export function evaluatePolicy(
         }
       }
 
-      if ((fsp.allowed_paths ?? []).length > 0) {
-        if (!fsp.allowed_paths!.some((p) => val.startsWith(p))) {
+      const allowedPaths = fsp.allowed_paths ?? [];
+      if (allowedPaths.length > 0) {
+        if (!allowedPaths.some((p) => val.startsWith(p))) {
           return { decision: "BLOCK", decision_reason: "filesystem: path not in allowlist",
             blast_radius: "HIGH", reversible: false, matched_rule: "filesystem:allowed_path" };
         }
@@ -253,8 +255,9 @@ export function evaluatePolicy(
       }
     }
 
-    if ((mdl.allowed ?? []).length > 0) {
-      if (!mdl.allowed!.includes(modelId)) {
+    const allowedModels = mdl.allowed ?? [];
+    if (allowedModels.length > 0) {
+      if (!allowedModels.includes(modelId)) {
         return { decision: "BLOCK", decision_reason: "models: model_id not in allowlist",
           blast_radius: "CRITICAL", reversible: false, matched_rule: "models:allowed" };
       }
