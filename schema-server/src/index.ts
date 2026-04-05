@@ -1,5 +1,7 @@
 import receiptSchema from "../public/var/v1/schema.json";
+import testVectorsData from "../public/var/v1/test-vectors.json";
 import policySchema from "../../docs/reference/policy-schema.json";
+import publicContractData from "../../docs/reference/contract.md";
 import varCoreSpec from "../../docs/spec/var-core-v1.0.md";
 import varMoneySpec from "../../docs/spec/var-money-v1.0.md";
 
@@ -108,17 +110,8 @@ function notFound(message: string): Response {
   return jsonErrorResponse(message, 404);
 }
 
-function testVectorsResponse(env: Env, maxAgeSeconds: number): Response {
-  const vectors = env["TEST_VECTORS_V1"];
-  if (!vectors) {
-    return jsonErrorResponse("Test vectors not available", 503);
-  }
-  try {
-    const parsed = JSON.parse(vectors) as unknown;
-    return cachedJsonResponse(parsed, maxAgeSeconds);
-  } catch {
-    return notFound("Test vectors data malformed");
-  }
+function testVectorsResponse(maxAgeSeconds: number): Response {
+  return cachedJsonResponse(testVectorsData, maxAgeSeconds);
 }
 
 function receiptSchemaResponse(maxAgeSeconds: number): Response {
@@ -243,12 +236,12 @@ export default {
 
     // GET /var/v1/test-vectors.json
     if (pathname === "/var/v1/test-vectors.json") {
-      return testVectorsResponse(env, 86400);
+      return testVectorsResponse(86400);
     }
 
     // GET /var/v1/conformance
     if (pathname === "/var/v1/conformance") {
-      return withHeaders(testVectorsResponse(env, 86400), {
+      return withHeaders(testVectorsResponse(86400), {
         Link: "<https://schemas.nonsudo.com/var/v1/test-vectors.json>; rel=\"canonical\"",
       });
     }
@@ -267,12 +260,7 @@ export default {
 
     // GET /var/v1/public-contract
     if (pathname === "/var/v1/public-contract") {
-      // Populate with: wrangler secret put PUBLIC_CONTRACT_V1 < docs/public-contract.md
-      const publicContract = env["PUBLIC_CONTRACT_V1"];
-      if (!publicContract) {
-        return jsonErrorResponse("public contract not yet deployed", 503);
-      }
-      return markdownResponse(publicContract, 3600);
+      return markdownResponse(publicContractData, 3600);
     }
 
     // GET /var/v1.0/spec.md — VAR Core v1.0 spec
